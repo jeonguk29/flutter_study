@@ -28,6 +28,30 @@ class MyApp extends StatelessWidget {
     home: MyHomepage(),            //홈은 앱이 정상적으로 실행되었을때 가장먼저 화면에 보여주는 경로 앱실행시 MyHomepage(), 위젯내에 내용을 가장 먼저 보게될것임 
     );
   }
+}
 
+// MyHomepage() 커스텀 위젯도 만들어 줘야 하는데 항상 커스텀 위젯 만들때 StatefulWidget 으로 만들지 StatelessWidget 로 만들지 고민해야함 
 
+class MyHomepage extends StatelessWidget {
+
+  Widget build(BuildContext context) {
+    return Scaffold( //  // Scaffold 위젯 앱화면에 다양한 요소들을 배치하고 그릴수 있도록 도와주는 빈 도화지 같은 역할을 함 만약 이 위젯이 없으면 어떠한 요소들도 배치할수 없음 
+    appBar: AppBar(
+      title: Text('First app'),
+      /*
+    MaterialApp 안에서 title: 'First app' 은 앱을 총칭하는 타이틀임, 스마트폰에서 최근 사용한 앱리스트를 보여줄때는 이게 보여짐 
+    반면 AppBar title: Text('First app'), 앱화면 앱바에 보여지는 타이틀을 말함 
+      */
+    ),
+    body: Center(  // body 앱화면을 만드는 시작점임 Center 모든 위젯을 중앙으로  자식들을 가질 수 있음 
+      child: Column(  // Column 위젯은 Center 위젯에 대표적 자식 위젯임 자식내 모든 요소를 세로로 배치하는 기능
+        children: <Widget>[   // 컬럼 위젯이 자식 위젯(칠드런을 가짐) 가진다면 하나가 아닐 것임 그래서 [] 이렇게 배열로 만들어줌 
+          Text('Hello'),
+          Text('Hello'),
+          Text('Hello')
+        ],
+      ),
+    ),
+    );
+  }
 }
