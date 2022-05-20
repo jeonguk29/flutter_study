@@ -34,7 +34,7 @@ class Grade extends StatelessWidget {
         children: [
           Center(
             child: CircleAvatar(
-              backgroundImage: AssetImage('assets/KakaoTalk_20220520_215447724_01.png'),
+              backgroundImage: AssetImage('assets/KakaoTalk_20220520_215447724_01.jpg'),
               radius: 60.0,
             ),
           ),// tip컨트롤 스페이스 누르면 그 위젯이 가지는 속성 들이 나옴 
@@ -131,7 +131,7 @@ class Grade extends StatelessWidget {
       ),
       Center(
         child: CircleAvatar(
-        backgroundImage : AssetImage('assets/KakaoTalk_20220520_215447724.png'),
+        backgroundImage : AssetImage('assets/KakaoTalk_20220520_215447724.jpg'),
         radius: 40.0,
         backgroundColor: Colors.amber[800],
       ),
