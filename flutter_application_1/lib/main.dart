@@ -48,6 +48,7 @@ class MyHomepage extends StatelessWidget {
         children: <Widget>[   // 컬럼 위젯이 자식 위젯(칠드런을 가짐) 가진다면 하나가 아닐 것임 그래서 [] 이렇게 배열로 만들어줌 
           Text('Hello'),
           Text('Hello'),
+          Text('Hello'),
           Text('Hello')
         ],
       ),
