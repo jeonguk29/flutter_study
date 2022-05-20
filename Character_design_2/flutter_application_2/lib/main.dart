@@ -1,39 +1,56 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Myapp());
 
-class MyApp extends StatelessWidget {
-  Widget build(BuildContext context){
+class Myapp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Charactor card',
-      home: MyCard(),
-    );
+      title: 'BBANTO',
+      home: Grade(),
+    );   
   }
-} 
+}
 
-class MyCard extends StatelessWidget{
-  Widget build(BuildContext context){
+class Grade extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.amber[800],
       appBar: AppBar(
-        title: Text("BBANTO"),
-        centerTitle: true,  // 불리언 값을 가짐 centerTitle 참이면 중앙으로 옴 
-        backgroundColor: Colors.red,
-        elevation: 0.0,  // 앱바가 떠있어 보이는 걸 소수점 단위로 조절 해줌 
+        title: const Text('BBANTO'),
+        backgroundColor: Colors.amber[700],
+        centerTitle: true,
+        elevation: 0.0,
       ),
-       //Padding(  // 패딩 특정 지점으로부터 위젯이 떨어져야 할때 사용
-      //padding: EdgeInsets.fromLTRB(30.0, 40.0, 0.0, 0.0),
-      //child: 
-      body: Center(
+      body: Padding(padding: EdgeInsets.fromLTRB(30.0, 40.0, 0.0, 0.0),
+      // ignore: prefer_const_literals_to_create_immutables
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center, // 위젯을 앱 스크린 내 개념에서 정렬 
-        children: <Widget>[   // 패딩위젯에 자식 위젯이라 위에 적용한 패딩값으로 위젯을 세로로 배치 할것임 
-        Text('hello'),
-        Text('hello'),
-        Text('hello'),  // 정리 세로축으로 정 중앙 정렬 하려면 mainAxisAlignment 필요 
-                        // 컬럼 위젯을 가로축 상으로 정 중앙 시키려면 센터 위젯을 이용 
-          ],
-        ),  
-      ), 
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+      Text('NAME', 
+      style: TextStyle(
+        color: Colors.white,
+        letterSpacing: 2.0,
+      ),
+      ),
+      SizedBox(   // 눈에 보이지 않지만 두 택스트 사이에서 가로 세로 간격 마음대로 조절 가능 
+        height: 10.0,
+      ),
+      Text('BBANTO',
+      style: TextStyle(
+        color: Colors.white,
+        letterSpacing: 2.0,
+        fontSize: 28.0,
+        fontWeight: FontWeight.bold // 글자 굵기 
+      ),
+      ),
+      ],
+      ),
+      
+  
+      ),
     );
   }
 }
