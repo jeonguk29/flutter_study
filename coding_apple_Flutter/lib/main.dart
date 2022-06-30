@@ -23,52 +23,35 @@ class MyApp extends StatelessWidget {
             ),
           ],
         ),
-          body: Row(children: [
-            Container(
-              height: 200,
-              width: 200,
-              child: Image.asset('koko1.png'),
+          body: Container(
+            height: 150,
+            padding: EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Image.asset("koko1.png", width: 150,),
+                Flexible(flex: 10,child:
+                Container(
 
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("카메라 팝니다."),
+                      Text("금호동 3가"),
+                      Text("7000원"),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Icon(Icons.favorite),
+                          Text("4"),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                ),
+              ],
             ),
-            Container(
-              height: 200,
-              width: 210,
-              child: Column(
-                //mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("정정욱 개발자 네카라쿠배 취업하다 "),
-                  Text("서울시 구로구", style: TextStyle(color: Color(0xffbeb4b4))),
-                  Text("23"),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 200,
-              width: 20,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(Icons.favorite_border),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 200,
-              width: 20,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text('4'),
-                ],
-              ),
-            ),
-
-
-
-
-
-          ],),
+          ),
 
 
         ),
