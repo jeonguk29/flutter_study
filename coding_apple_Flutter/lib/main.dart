@@ -12,38 +12,74 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         home:Scaffold(
         appBar: AppBar(
-          title: Text("앱제목"),
+          title: Text("금호동3가"),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Icon(Icons.search),
+                Icon(Icons.reorder),
+                Icon(Icons.notifications)],
+            ),
+          ],
         ),
-          body: Text("안녕"),
-          bottomNavigationBar:
-          BottomAppBar(
-            child: Container(
-              height : 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                Icon(Icons.phone),
-                Icon(Icons.message),
-                Icon(Icons.contact_page),
-              ],
+          body: Row(children: [
+            Container(
+              height: 200,
+              width: 200,
+              child: Image.asset('koko1.png'),
+
+            ),
+            Container(
+              height: 200,
+              width: 210,
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("정정욱 개발자 네카라쿠배 취업하다 "),
+                  Text("서울시 구로구", style: TextStyle(color: Color(0xffbeb4b4))),
+                  Text("23"),
+                ],
               ),
             ),
-          ),
-/*
-    Column(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,    // row 일때 가로 정렬 Column 일때는 세로 정렬임
-    //crossAxisAlignment: CrossAxisAlignment.center,   세로축 정렬
+            SizedBox(
+              height: 200,
+              width: 20,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(Icons.favorite_border),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 200,
+              width: 20,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text('4'),
+                ],
+              ),
+            ),
 
-    children: const [
-    Icon(Icons.star),
-    Icon(Icons.star),
-    Icon(Icons.star),
-    Icon(Icons.star),
-    ],
-    */
+
+
+
+
+          ],),
+
+
         ),
+            /*
+             Icon(Icons.star, color: Color(0xFFFA0000),),  아이콘 꾸미기
 
-        );
+            글자 꾸미기
+            text("안녕하세요",
+              style: TextStyle(color: Color(0xFF645454),
+                fontSize: 50, fontWeight: FontWeight.w700,
+            ),*/
+    );
   }
 }
