@@ -30,58 +30,40 @@ class MyApp extends StatelessWidget {
           body: // ShopItem(),  커스텀 위젯 사용법
           ListView(
             children: [
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
-              Text("안녕"),
+              SizedBox(
+                height: 30,
+                width: 50,
+                child:Row(
+                  children: [
+                    Icon(Icons.person),
+                    Text("홍길동"),
+                  ],
+                ) ,
+              ),
+              SizedBox(
+                height: 30,
+                width: 50,
+                child:Row(
+                  children: [
+                    Icon(Icons.person),
+                    Text("홍길동"),
+                  ],
+                ) ,
+              ),
+              SizedBox(
+                height: 30,
+                width: 50,
+                child:Row(
+                  children: [
+                    Icon(Icons.person),
+                    Text("홍길동"),
+                  ],
+                ) ,
+              ),
 
             ],
           ),
-
+          bottomNavigationBar: Botoom_Main()
         ),
     );
   }
@@ -97,3 +79,27 @@ class ShopItem extends StatelessWidget {
   );
   }
 }
+
+class Botoom_Main extends StatelessWidget {
+  const Botoom_Main({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white, //색상
+      child:  Container(
+        height: 70,
+        padding: EdgeInsets.only(bottom: 10, top: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Icon(Icons.call),
+            Icon(Icons.message),
+            Icon(Icons.contacts),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
