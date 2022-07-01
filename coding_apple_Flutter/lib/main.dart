@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp()); // 앱 메인 페이지 입력하면 됩니다.
+  runApp( MyApp()); // 앱 메인 페이지 입력하면 됩니다.
 }
 
 var a = SizedBox(
@@ -9,12 +9,21 @@ var a = SizedBox(
 );
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  var a =1;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home:Scaffold(
+          floatingActionButton:FloatingActionButton(
+            child:Text(a.toString()),
+            onPressed: (){
+              print(a);
+              a++;
+            },
+          ),
         appBar: AppBar(
           title: Text("금호동3가"),
           actions: [
@@ -27,44 +36,35 @@ class MyApp extends StatelessWidget {
             ),
           ],
         ),
-          body: // ShopItem(),  커스텀 위젯 사용법
+          bottomNavigationBar: Botoom_Main(),
+          body: ListView.builder(
+              itemCount: 300,  // 3번 반복
+              itemBuilder: (context,i){ // i 반복시 1씩 증가
+                //print(i);  // 값 출력시 이용 이건 브라우저가 아니라 콘솔창에서 임  궁금한거 바로 찍어볼수 있음
+                return ListTile(   // ListTile 위젯 쓰면 연락처 같은 거 쉽게 만들수 있음
+                    leading: Image.asset('koko1.png'),
+                title: Text(i.toString()),
+                );
+              }),
+          /*
           ListView(
             children: [
-              SizedBox(
-                height: 30,
-                width: 50,
-                child:Row(
-                  children: [
-                    Icon(Icons.person),
-                    Text("홍길동"),
-                  ],
-                ) ,
+             ListTile(   // ListTile 위젯 쓰면 연락처 같은 거 쉽게 만들수 있음
+               leading: Image.asset('koko1.png'),
+               title: Text("홍길동"),
+             ),
+              ListTile(
+                leading: Image.asset('koko1.png'),
+                title: Text("홍길동"),
               ),
-              SizedBox(
-                height: 30,
-                width: 50,
-                child:Row(
-                  children: [
-                    Icon(Icons.person),
-                    Text("홍길동"),
-                  ],
-                ) ,
-              ),
-              SizedBox(
-                height: 30,
-                width: 50,
-                child:Row(
-                  children: [
-                    Icon(Icons.person),
-                    Text("홍길동"),
-                  ],
-                ) ,
+              ListTile(
+                leading: Image.asset('koko1.png'),
+                title: Text("홍길동"),
               ),
 
             ],
+            */
           ),
-          bottomNavigationBar: Botoom_Main()
-        ),
     );
   }
 }
