@@ -4,15 +4,18 @@ void main() {
   runApp( MyApp()); // 앱 메인 페이지 입력하면 됩니다.
 }
 
-var a = SizedBox(
-  child: Text('안녕'),
-);
 
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {               // 현제  StatefulWidget 로 바꿈
   MyApp({Key? key}) : super(key: key);
+  @override
+  State<MyApp> createState() => _MyAppState();
+}                                                       //여기 까지 개무시
 
-  var a =1;
-
+class _MyAppState extends State<MyApp> {
+  var a =1;                                           //변수가 자동으로 state임 StatefulWidget 에서는
+  var name = "연락처앱";
+  var name2 = ["김영숙", "홍길동", "피자집"];  //이래야 김영숙 2로 바뀔때 바로바로 보여질거임
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,12 +23,15 @@ class MyApp extends StatelessWidget {
           floatingActionButton:FloatingActionButton(
             child:Text(a.toString()),
             onPressed: (){
-              print(a);
-              a++;
+                setState((){    // state 변경하려면 여기서
+                  a++;   // state는 변경시 재 랜더링이 됨 즉 다시 그려줌 기존거 지우고
+                });
             },
           ),
+
+
         appBar: AppBar(
-          title: Text("금호동3가"),
+          title: Text(name), // state 사용 사실상 이렇게 쓸필요 없음 자주 변하는게 아니라
           actions: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -38,47 +44,20 @@ class MyApp extends StatelessWidget {
         ),
           bottomNavigationBar: Botoom_Main(),
           body: ListView.builder(
-              itemCount: 300,  // 3번 반복
+              itemCount: 3,  // 3번 반복
               itemBuilder: (context,i){ // i 반복시 1씩 증가
-                //print(i);  // 값 출력시 이용 이건 브라우저가 아니라 콘솔창에서 임  궁금한거 바로 찍어볼수 있음
-                return ListTile(   // ListTile 위젯 쓰면 연락처 같은 거 쉽게 만들수 있음
+                return ListTile(
                     leading: Image.asset('koko1.png'),
-                title: Text(i.toString()),
+                title: Text(name2[i]),  //    i 가 반복시 증가하니까 이렇게 하면 리스트 순서대로 이름이 출력됨
+                  //ListTile 처음 생성시 i는 o 그다음 생성시 1 그다음 생성시 2 이렇게 됨
                 );
               }),
-          /*
-          ListView(
-            children: [
-             ListTile(   // ListTile 위젯 쓰면 연락처 같은 거 쉽게 만들수 있음
-               leading: Image.asset('koko1.png'),
-               title: Text("홍길동"),
-             ),
-              ListTile(
-                leading: Image.asset('koko1.png'),
-                title: Text("홍길동"),
-              ),
-              ListTile(
-                leading: Image.asset('koko1.png'),
-                title: Text("홍길동"),
-              ),
-
-            ],
-            */
           ),
     );
   }
 }
 
-class ShopItem extends StatelessWidget {
-  const ShopItem ({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-    child: Text('안녕'),
-  );
-  }
-}
 
 class Botoom_Main extends StatelessWidget {
   const Botoom_Main({Key? key}) : super(key: key);
