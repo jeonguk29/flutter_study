@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(        // 보통 앱만들때 이렇게 마테리얼 앱을 밖으로 빼줌
-      home: MyApp()              // 이렇게 해도 레이아웃 똑같음 마테리얼 안에 MyApp 즉 Scaffold가 들어가는 것임
-  )
+  runApp(
+    MyApp()
   );
 }
 
@@ -21,31 +20,24 @@ class _MyAppState extends State<MyApp> {
   var name2 = ["김영숙", "홍길동", "피자집"];
   var like = [0, 0, 0];
   @override
-  Widget build(BuildContext context) {  // 여기 context 아래에도 계속 스는 context 임
-    // context는 부모 위젯의 정보를 담고 있는 변수임 커스텀 위젯을 생성 할때마다 만들어 줘야함
-    // 쉽게 생각하면 족보라고 생각하기 부모들 정보가 담긴 단 형제는 x 상위 부모들만
-    return  Scaffold(
-      //floatingActionButton: Test(),  context 연습퀴즈 : Test 클레스 내려가서 답확인
-        floatingActionButton: FloatingActionButton(
-          child: Text(a.toString()),
-          onPressed: () {
-                //print(context.findAncestorWidgetOfExactType<MaterialApp>());
-                // 부모중에 MaterialApp이 있는지 찾아주세요라는 간단한 함수  찾으면 콘솔에 나옴
-                showDialog(context: context, builder: (context){ //현제 스케폴드 위에 부모는 마테리얼 앱 + 부모들을 말함
-                  //showDialog 함수는 context에 MaterialApp이 들어 있어야 잘 동작하는 함수임 아무 context는 X
-                  /*
-
-                  MaterialApp(
-                  home: Scaffold(    이런식으로 코드를 짜면 아까 오류가 나는게   MaterialApp에 context를 불러 오는데
-                  MaterialApp에 context 즉 부모가 없어서 오류가 나는 것임 그래서   Scaffold로 만들고 위로  MaterialApp
-                  를 보낸것임
-
-                   */
-
-
-                  return Dialog(child: Text('안녕'));   // MaterialApp 을 밖으로 빼줘야  Dialog 작동 됨
-              });
-            },
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home:Scaffold(          // 레이아웃 이전 커밋처럼 MaterialApp 올리거나 그런게 싫으면 FloatingActionButton
+        // 누르고 빌더라는 위젯으로 감싸주면 됨 Builder 위젯은 중간에서 족보 context를 만들어줌
+        floatingActionButton: Builder(
+          builder: (context) {  // 그리면 여기 context 위에 MaterialApp, Scaffold 부모 위젯이 들어가서 오류 안남
+            // 아래 showDialog 함수는 MaterialApp 이 들어가있는 context가 필요하니까
+            // 하지만 이전 커밋에 있는 첫번째 방법 MaterialApp을 위로 빼는것을 권장 뭐 하다가 오류나면 중간 빌더 위젯
+            // 사용해서 중간 족보 context 만들면 오류 해결 가능 할것임 
+            return FloatingActionButton(
+              child: Text(a.toString()),
+              onPressed: () {
+                    showDialog(context: context, builder: (context){
+                      return Dialog(child: Text('안녕'));
+                  });
+                },
+            );
+          }
         ),
 
 
@@ -71,7 +63,8 @@ class _MyAppState extends State<MyApp> {
             );
           },
         ),
-      );
+      ),
+    );
   }
 }
 
