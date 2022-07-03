@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(
-    MyApp()
-  );
+  runApp(MaterialApp(
+      // 보통 앱만들때 이렇게 마테리얼 앱을 밖으로 빼줌
+      home: MyApp() // 이렇게 해도 레이아웃 똑같음 마테리얼 안에 MyApp 즉 Scaffold가 들어가는 것임
+      ));
 }
-
-
 
 class MyApp extends StatefulWidget {
   MyApp({Key? key}) : super(key: key);
+
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -19,69 +19,111 @@ class _MyAppState extends State<MyApp> {
   var name = "연락처앱";
   var name2 = ["김영숙", "홍길동", "피자집"];
   var like = [0, 0, 0];
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home:Scaffold(          // 레이아웃 이전 커밋처럼 MaterialApp 올리거나 그런게 싫으면 FloatingActionButton
-        // 누르고 빌더라는 위젯으로 감싸주면 됨 Builder 위젯은 중간에서 족보 context를 만들어줌
-        floatingActionButton: Builder(
-          builder: (context) {  // 그리면 여기 context 위에 MaterialApp, Scaffold 부모 위젯이 들어가서 오류 안남
-            // 아래 showDialog 함수는 MaterialApp 이 들어가있는 context가 필요하니까
-            // 하지만 이전 커밋에 있는 첫번째 방법 MaterialApp을 위로 빼는것을 권장 뭐 하다가 오류나면 중간 빌더 위젯
-            // 사용해서 중간 족보 context 만들면 오류 해결 가능 할것임 
-            return FloatingActionButton(
-              child: Text(a.toString()),
-              onPressed: () {
-                    showDialog(context: context, builder: (context){
-                      return Dialog(child: Text('안녕'));
-                  });
-                },
-            );
-          }
-        ),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Text(a.toString()),
+        onPressed: () {
+          showDialog(
+              barrierDismissible: false, //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+              context: context,
+              builder: (context) {
+
+                return Dialog(
+                    child: Container(
+                      height: 200, width: 330,
+                      //padding: EdgeInsets.all(10),
+
+                      child: Column(
+                        crossAxisAlignment:CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(30),
+                            child: Text("Contact",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(30, 10, 0, 5),
+                            child:
+                            Text("02123456",
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: const  EdgeInsets.fromLTRB(30, 0, 0, 30),
+                            child: Container(
+                              //padding: EdgeInsets.fromLTRB(100, 0, 0, 30),
+
+                              height:1.0,
+                              width:270.0,
+                              color:Colors.black12,),
+                          ),
+                          Container(
+                            padding: const  EdgeInsets.fromLTRB(30, 0, 20, 30),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(onPressed: (){
+                                  Navigator.pop(context); //열려있는 Dialog를 닫는 부분입니다.
+                                }, child: Text("Cansel")),
+
+                                TextButton(onPressed: (){
+                                  Navigator.pop(context); // 열려있는 Dialog를 닫는 부분입니다.
+                                }, child: Text("OK")),
+                              ],
+                            ),
+                          )
 
 
-        appBar: AppBar(
-          title: Text(name),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Icon(Icons.search),
-                Icon(Icons.reorder),
-                Icon(Icons.notifications)],
-            ),
-          ],
-        ),
-        bottomNavigationBar: Botoom_Main(),
-        body: ListView.builder(
-          itemCount: 3,
-          itemBuilder: (context, i) {
-            return ListTile(
-              leading: Image.asset('koko1.png'),
-              title: Text(name2[i]),
-            );
-          },
-        ),
+
+                        ],
+                      ),
+
+                    ));
+              });
+        },
+      ),
+      appBar: AppBar(
+        title: Text(name),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          ),
+        ],
+      ),
+      bottomNavigationBar: Botoom_Main(),
+      body: ListView.builder(
+        itemCount: 3,
+        itemBuilder: (context, i) {
+          return ListTile(
+            leading: Image.asset('koko1.png'),
+            title: Text(name2[i]),
+          );
+        },
       ),
     );
   }
 }
 
-
-
-
 class Test extends StatelessWidget {
   const Test({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {  // 여기 context는 무슨 정보 Scaffold  + 그리고 Scaffold의 부모인 마테리얼 앱 같은게 있을것임
+  Widget build(BuildContext context) {
+    // 여기 context는 무슨 정보 Scaffold  + 그리고 Scaffold의 부모인 마테리얼 앱 같은게 있을것임
     return Container();
   }
 }
-
-
-
 
 class Botoom_Main extends StatelessWidget {
   const Botoom_Main({Key? key}) : super(key: key);
@@ -90,7 +132,7 @@ class Botoom_Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white, //색상
-      child:  Container(
+      child: Container(
         height: 70,
         padding: EdgeInsets.only(bottom: 10, top: 5),
         child: Row(
@@ -105,4 +147,3 @@ class Botoom_Main extends StatelessWidget {
     );
   }
 }
-
