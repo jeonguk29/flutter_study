@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
 
                 return Dialog(
                     child: Container(
-                      height: 200, width: 330,
+                      height: 200, width: 350,
                       //padding: EdgeInsets.all(10),
 
                       child: Column(
@@ -49,27 +49,20 @@ class _MyAppState extends State<MyApp> {
                             ),
                           ),
                           Container(
+                            width: 320,
                             padding: EdgeInsets.fromLTRB(30, 10, 0, 5),
                             child:
-                            Text("02123456",
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            TextField(
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Hint',
+                              )
+                            ),  // 사용자 텍스트 입력
                           ),
 
-                          Padding(
-                            padding: const  EdgeInsets.fromLTRB(30, 0, 0, 30),
-                            child: Container(
-                              //padding: EdgeInsets.fromLTRB(100, 0, 0, 30),
 
-                              height:1.0,
-                              width:270.0,
-                              color:Colors.black12,),
-                          ),
                           Container(
-                            padding: const  EdgeInsets.fromLTRB(30, 0, 20, 30),
+                            padding: const  EdgeInsets.fromLTRB(30, 0, 20, 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
