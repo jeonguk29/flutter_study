@@ -31,58 +31,10 @@ class _MyAppState extends State<MyApp> {
               context: context,
               builder: (context) {
 
-                return Dialog(
-                    child: Container(
-                      height: 200, width: 350,
-                      //padding: EdgeInsets.all(10),
-
-                      child: Column(
-                        crossAxisAlignment:CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(30),
-                            child: Text("Contact",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 320,
-                            padding: EdgeInsets.fromLTRB(30, 10, 0, 5),
-                            child:
-                            TextField(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Hint',
-                              )
-                            ),  // 사용자 텍스트 입력
-                          ),
-
-
-                          Container(
-                            padding: const  EdgeInsets.fromLTRB(30, 0, 20, 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                TextButton(onPressed: (){
-                                  Navigator.pop(context); //열려있는 Dialog를 닫는 부분입니다.
-                                }, child: Text("Cansel")),
-
-                                TextButton(onPressed: (){
-                                  Navigator.pop(context); // 열려있는 Dialog를 닫는 부분입니다.
-                                }, child: Text("OK")),
-                              ],
-                            ),
-                          )
-
-
-
-                        ],
-                      ),
-
-                    ));
+                return DialogUI(state : a);  // 부모 변수 쓰려면 자식 위젯(작명:보낼state)해줘야함     , 기준으로 여러개 가능
+                // 스테이트라는 이름으로 부모 a를 보냄 크게  1.보내고, 2등록하고, 3사용
+                // 참고로 부모가 자식에게 보내는건 가능 하지만 자식이 부모에게 같은 자식이 자식에게 보내는건 불허
+                // 교훈 : 많은곳에서 쓰는 state는 최대한 부모 위젯에 만들자.
               });
         },
       ),
@@ -107,6 +59,34 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+class DialogUI extends StatelessWidget {
+  const DialogUI({Key? key, this.state}) : super(key: key);
+  final state;    //  위에 this.state 로 등록 아래 등록 지정한 이름으로 등록하면됨 그리고 const 지우거나 var 대신 final 쓰면 되는데
+  //// final은 나중에 변수 수정 불가능함  관습적으로 final 사용 부모가 보낸걸 잘 변경 안함
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+        child: SizedBox(
+          height: 300, width: 300,
+          //padding: EdgeInsets.all(10),
+
+          child: Column(
+            crossAxisAlignment:CrossAxisAlignment.start,
+            children: [             // 부모 -> 자식 state 전송해줘야 부모의 변수 사용 가능함
+              TextField(),
+              // 3. 사용
+              TextButton(child: Text(state.toString()),onPressed: () {}, ),  // 이렇게 부모에 a변수를 접고 하고 싶은데 원래 다른 class에 있는 변수는 마음대로 못씀
+              TextButton(child: Text('취소'),
+                onPressed: (){ Navigator.pop(context);})
+            ],
+          ),
+        )
+    );
+  }
+}
+
+
 
 class Test extends StatelessWidget {
   const Test({Key? key}) : super(key: key);
