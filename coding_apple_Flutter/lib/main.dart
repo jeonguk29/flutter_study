@@ -20,26 +20,33 @@ class _MyAppState extends State<MyApp> {
   var name2 = ["김영숙", "홍길동", "피자집"];
   var like = [0, 0, 0];
 
+  var total =3;
+
+
+  AddOne()
+  {
+    setState(() {
+      total++;     // 부모 state를 자식이 수정하려면 1.부모안에 수정함수부터 만들고 수정 함수를 전송함
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: Text(a.toString()),
+        child: Text(total.toString()),
         onPressed: () {
           showDialog(
               barrierDismissible: false, //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
               context: context,
               builder: (context) {
 
-                return DialogUI(state : a);  // 부모 변수 쓰려면 자식 위젯(작명:보낼state)해줘야함     , 기준으로 여러개 가능
-                // 스테이트라는 이름으로 부모 a를 보냄 크게  1.보내고, 2등록하고, 3사용
-                // 참고로 부모가 자식에게 보내는건 가능 하지만 자식이 부모에게 같은 자식이 자식에게 보내는건 불허
-                // 교훈 : 많은곳에서 쓰는 state는 최대한 부모 위젯에 만들자.
+                return DialogUI(AddOne : AddOne);  // 함수도 이렇게 전송함  변수명 or 함수명만 전송
               });
         },
       ),
       appBar: AppBar(
-        title: Text(name),
+        title: Text(total.toString()),
         actions: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -61,9 +68,11 @@ class _MyAppState extends State<MyApp> {
 }
 
 class DialogUI extends StatelessWidget {
-  const DialogUI({Key? key, this.state}) : super(key: key);
-  final state;    //  위에 this.state 로 등록 아래 등록 지정한 이름으로 등록하면됨 그리고 const 지우거나 var 대신 final 쓰면 되는데
-  //// final은 나중에 변수 수정 불가능함  관습적으로 final 사용 부모가 보낸걸 잘 변경 안함
+  DialogUI({Key? key, this.AddOne}) : super(key: key);
+  final AddOne;
+  var inputData = TextEditingController(); // 유저가 입력한걸 저장 하고 싶으면 이 TextEditingController() 위젯을 넣어주여야함
+  var inputData2 = '';
+  var inputData3 = {};  // 이런 Map 혹은 list [] 이용하면 TextField 얼마나 많던 각각 저장 할수 있음
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -73,10 +82,28 @@ class DialogUI extends StatelessWidget {
 
           child: Column(
             crossAxisAlignment:CrossAxisAlignment.start,
-            children: [             // 부모 -> 자식 state 전송해줘야 부모의 변수 사용 가능함
-              TextField(),
-              // 3. 사용
-              TextButton(child: Text(state.toString()),onPressed: () {}, ),  // 이렇게 부모에 a변수를 접고 하고 싶은데 원래 다른 class에 있는 변수는 마음대로 못씀
+            children: [
+              TextField(
+                // 1번째 사용자 입력 input 받는 방법
+                // 유저가 입력한 데이터를 변수에 담아야 저장이 가능함 controller
+                controller: inputData, // 유저가 입력한 값을 이 변수에 담게됨
+                // inputData.text 나중에 이렇게 하면 유져가 입력한 값 확인 가능함
+
+                // 2번째 방법 (좀더 직관적)
+                onChanged: (text){ // 사용자가 입력한 값 여기에 저장됨
+                  //print(text);
+                  inputData2 = text;
+                },// onPressd랑 비슷 이건 버튼 누르면 함수 실행해주세요이지만
+                //onChanged는 입력 데이터가 들어오면 함수 실행임
+                // 이방법은 TextField가 많을때 유용함
+              ),
+              TextField(onChanged: (text2){ // 사용자가 입력한 값 여기에 저장됨
+                inputData2 = text2;
+              },),
+
+              TextButton(child: Text("완료"),onPressed: () {
+                AddOne();
+              }, ),
               TextButton(child: Text('취소'),
                 onPressed: (){ Navigator.pop(context);})
             ],
