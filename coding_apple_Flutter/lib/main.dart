@@ -23,10 +23,17 @@ class _MyAppState extends State<MyApp> {
   var total =3;
 
 
-  AddOne()
+  AddName(New_name)  // 다양한 자료형 입력가능
   {
     setState(() {
-      total++;     // 부모 state를 자식이 수정하려면 1.부모안에 수정함수부터 만들고 수정 함수를 전송함
+      name2.add(New_name); // 자동 스테이트 추가됨 그러면 자동 UI 반영됨 왜냐 스테이스 수정되면 자동 재 랜더링 하기때문
+    });
+  }
+
+  AddNum()  // 다양한 자료형 입력가능
+  {
+    setState(() {
+    total++;
     });
   }
 
@@ -41,7 +48,7 @@ class _MyAppState extends State<MyApp> {
               context: context,
               builder: (context) {
 
-                return DialogUI(AddOne : AddOne);  // 함수도 이렇게 전송함  변수명 or 함수명만 전송
+                return DialogUI(AddName : AddName, AddNum : AddNum);  // 함수도 이렇게 전송함  변수명 or 함수명만 전송
               });
         },
       ),
@@ -55,7 +62,8 @@ class _MyAppState extends State<MyApp> {
       ),
       bottomNavigationBar: Botoom_Main(),
       body: ListView.builder(
-        itemCount: 3,
+        itemCount: name2.length,   // 이거때문에 오류 났음 구현은 했는데 값출력인 안된 이유 3만 반복하라고 해서
+        // 이걸 동적으로 바꾸면 됨  name2.length   길이만큼
         itemBuilder: (context, i) {
           return ListTile(
             leading: Image.asset('koko1.png'),
@@ -68,11 +76,11 @@ class _MyAppState extends State<MyApp> {
 }
 
 class DialogUI extends StatelessWidget {
-  DialogUI({Key? key, this.AddOne}) : super(key: key);
-  final AddOne;
-  var inputData = TextEditingController(); // 유저가 입력한걸 저장 하고 싶으면 이 TextEditingController() 위젯을 넣어주여야함
+  DialogUI({Key? key, this.AddName, this.AddNum}) : super(key: key);
+  final AddName;
+  final AddNum;
+  var inputData = TextEditingController();
   var inputData2 = '';
-  var inputData3 = {};  // 이런 Map 혹은 list [] 이용하면 TextField 얼마나 많던 각각 저장 할수 있음
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -84,25 +92,14 @@ class DialogUI extends StatelessWidget {
             crossAxisAlignment:CrossAxisAlignment.start,
             children: [
               TextField(
-                // 1번째 사용자 입력 input 받는 방법
-                // 유저가 입력한 데이터를 변수에 담아야 저장이 가능함 controller
-                controller: inputData, // 유저가 입력한 값을 이 변수에 담게됨
-                // inputData.text 나중에 이렇게 하면 유져가 입력한 값 확인 가능함
-
-                // 2번째 방법 (좀더 직관적)
                 onChanged: (text){ // 사용자가 입력한 값 여기에 저장됨
-                  //print(text);
                   inputData2 = text;
                 },// onPressd랑 비슷 이건 버튼 누르면 함수 실행해주세요이지만
-                //onChanged는 입력 데이터가 들어오면 함수 실행임
-                // 이방법은 TextField가 많을때 유용함
               ),
-              TextField(onChanged: (text2){ // 사용자가 입력한 값 여기에 저장됨
-                inputData2 = text2;
-              },),
-
+  
               TextButton(child: Text("완료"),onPressed: () {
-                AddOne();
+                AddName(inputData2);
+                AddNum();
               }, ),
               TextButton(child: Text('취소'),
                 onPressed: (){ Navigator.pop(context);})
