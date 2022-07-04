@@ -92,14 +92,13 @@ class DialogUI extends StatelessWidget {
             crossAxisAlignment:CrossAxisAlignment.start,
             children: [
               TextField(
-                onChanged: (text){ // 사용자가 입력한 값 여기에 저장됨
-                  inputData2 = text;
-                },// onPressd랑 비슷 이건 버튼 누르면 함수 실행해주세요이지만
+                controller: inputData,
               ),
   
               TextButton(child: Text("완료"),onPressed: () {
-                AddName(inputData2);
+                AddName(inputData.text);//.text 를 해서 넘겨 줘야함
                 AddNum();
+                Navigator.pop(context);
               }, ),
               TextButton(child: Text('취소'),
                 onPressed: (){ Navigator.pop(context);})
