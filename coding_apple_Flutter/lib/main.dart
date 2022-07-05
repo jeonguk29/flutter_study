@@ -18,15 +18,37 @@ class _MyAppState extends State<MyApp> {
   var a = 1;
   var name = "연락처앱";
   var name2 = ["김영숙", "홍길동", "피자집"];
+  var phone = ["01012341234", "01011111111", "01022222222"];
   var like = [0, 0, 0];
 
   var total =3;
 
 
+  AddPhone(New_phone)  // 다양한 자료형 입력가능
+  {
+    setState(() {
+      phone.add(New_phone); // 자동 스테이트 추가됨 그러면 자동 UI 반영됨 왜냐 스테이스 수정되면 자동 재 랜더링 하기때문
+    });
+  }
+
   AddName(New_name)  // 다양한 자료형 입력가능
   {
     setState(() {
       name2.add(New_name); // 자동 스테이트 추가됨 그러면 자동 UI 반영됨 왜냐 스테이스 수정되면 자동 재 랜더링 하기때문
+    });
+  }
+
+  Remove_name(r_name)  // 다양한 자료형 입력가능
+  {
+    setState(() {
+      name2.remove(r_name); // 자동 스테이트 추가됨 그러면 자동 UI 반영됨 왜냐 스테이스 수정되면 자동 재 랜더링 하기때문
+    });
+  }
+
+  Sort_name()  // 다양한 자료형 입력가능
+  {
+    setState(() {
+      name2.sort(); // 자동 스테이트 추가됨 그러면 자동 UI 반영됨 왜냐 스테이스 수정되면 자동 재 랜더링 하기때문
     });
   }
 
@@ -48,7 +70,7 @@ class _MyAppState extends State<MyApp> {
               context: context,
               builder: (context) {
 
-                return DialogUI(AddName : AddName, AddNum : AddNum);  // 함수도 이렇게 전송함  변수명 or 함수명만 전송
+                return DialogUI(AddName : AddName, AddNum : AddNum, AddPhone : AddPhone);  // 함수도 이렇게 전송함  변수명 or 함수명만 전송
               });
         },
       ),
@@ -67,8 +89,37 @@ class _MyAppState extends State<MyApp> {
         itemBuilder: (context, i) {
           return ListTile(
             leading: Image.asset('koko1.png'),
-            title: Text(name2[i]),
+            title: Container(
+              width: 300,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 80,
+                    child: Text(name2[i]),
+                  ),
+                  Text(phone[i]),
+                  Container(
+                    width: 200,
+                    padding: EdgeInsets.fromLTRB(10, 3, 20, 3),
+                    child:
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(child: Text("삭제"), onPressed: () {
+                        Remove_name(name2[i].toString());
+                      },),
+                      ElevatedButton(child: Text("정렬"), onPressed: () {
+                        Sort_name();
+                      },),
+                    ],
+                  ),
+                  ),
+                ],
+              ),
+            ),
+
           );
+
         },
       ),
     );
@@ -76,11 +127,12 @@ class _MyAppState extends State<MyApp> {
 }
 
 class DialogUI extends StatelessWidget {
-  DialogUI({Key? key, this.AddName, this.AddNum}) : super(key: key);
+  DialogUI({Key? key, this.AddName, this.AddNum, this.AddPhone}) : super(key: key);
   final AddName;
   final AddNum;
+  final AddPhone;
   var inputData = TextEditingController();
-  var inputData2 = '';
+  var inputData2 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -94,11 +146,21 @@ class DialogUI extends StatelessWidget {
               TextField(
                 controller: inputData,
               ),
+              TextField(
+                controller: inputData2,
+              ),
   
               TextButton(child: Text("완료"),onPressed: () {
-                AddName(inputData.text);//.text 를 해서 넘겨 줘야함
-                AddNum();
-                Navigator.pop(context);
+                if(inputData.text == "" || inputData2.text == "")
+                  {
+                    Navigator.pop(context);
+                  }
+                else {
+                  AddName(inputData.text); //.text 를 해서 넘겨 줘야함
+                  AddNum();
+                  AddPhone(inputData2.text); //.text 를 해서 넘겨 줘야함
+                  Navigator.pop(context);
+                }
               }, ),
               TextButton(child: Text('취소'),
                 onPressed: (){ Navigator.pop(context);})
