@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';  //  외부 패키지 가져옴
+import 'package:contacts_service/contacts_service.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -19,34 +20,42 @@ class _MyAppState extends State<MyApp> {
 
   getPermission() async {       // 패키지 만든 사람이 정한 사용 법임
     var status = await Permission.contacts.status; // 연락처 권한 줬는지 여부
-    // dart특징 오래걸리는 줄은 제껴두고 다음줄 실행하려고 함
-    // await 하지만 기다렸다 다음줄 실행하라고 하는 문법임 아래 값도 없이 if 실행되면 안되니까
-    // await  막쓰는게 아니라 쓸수있는 코드들이 따로 있음
     if (status.isGranted) {
       print('허락됨');   // 허락하면 이거 실행됨
+     var contacts = await ContactsService.getContacts(); // 이렇게 하면 연락처 다나옴   외울필요 x 그냥 패키지 사용법임
+      // 연락처 다나오는 함수를 사용해 변수에 넣어줌  그리고 이것도 오래 걸리는 코드라 await 사용하는걸 권장함
+      //print(contacts);
+      // 확인해보니 애뮬레이터에서 실제로 연락처 2개 저장하니까 [Instance of 'Contact', Instance of 'Contact'] 이런식으로 리스트로 출력됨
+      //print(contacts[0].displayName); // 실제 이름이나옴 . 찍으면 값 접근 가능함
+
+      // 폰에 연락처 강제로 추가하는 법
+      /*
+      var newPerson = Contact(); // class 인스턴스 뽑을때 new 생략 가능
+      newPerson.givenName ="민수";
+      newPerson.familyName ="김";
+      ContactsService.addContact(newPerson); // 실제로 폰에 연락처 강제 추가됨
+      // 색상 노란거 보니 await 지원 함
+      */
+
+      // dart는 타입을 잘 지켜야함 아래에 total 변수는 숫자만 넣을수 있도록 했는데 중간에 문자 못 넣음 오류남
+      // 우리는 이제 리스트에 실제 연락처를 넣을 거임
+      setState((){
+        name2 = contacts;
+      });
     } else if (status.isDenied) {
-      print('거절됨');                           // 허락 안하면 이거 실행됨
-      Permission.contacts.request();  // 허락해달라고 팝업띄우는 코드
-      // openAppSettings(); 위에 팝업 2번 취소하면 다신 뜨지 않음 앱 정책임
-      // 그래서 주석한것처럼 직접 설정가서 켜달라고 하는게 좋음
+      print('거절됨');
+      Permission.contacts.request();
     }
   }
 
-/*
-  void initState(){  // 유용한 함수인데 이 위젯 즉 Myapp 위젯이 처음 로드될때
-    super.initState();  // 이안에 코드를 한번 실행함
-    getPermission(); // 우리가 방금 허락 요청하는 함수도 여기에 넣으면 로드될때 실행될거임
-    // 요즘은 이렇게 코드 안짬 사람들이 뜨자마자 저런거 허락해달라고 하면 혐오감 생겨서 필요할때만 뜨게 해야함
-  }
-*/
 
   var a = 1;
   var name = "연락처앱";
-  var name2 = ["김영숙", "홍길동", "피자집"];
+  var name2 = []; // 빈걸로 넣으면 마우스 올리면 dynamic 타입이라고 알려줌 이건 리스트안에 모든 타입 아무거나 나 올수 있다는 것임
+  // List<Contact> name2 =[]; 혹은 이렇게 지정해서 사용할수도 있음 무조건 저 타임만 넣을수 있다는 것임 : 제너릭
   var like = [0, 0, 0];
 
   var total =3;
-
 
   AddName(New_name)  // 다양한 자료형 입력가능
   {
@@ -76,8 +85,8 @@ class _MyAppState extends State<MyApp> {
         itemCount: name2.length,
         itemBuilder: (context, i) {
           return ListTile(
-            leading: Image.asset('assets/koko1.png'),  // 앱에서는  이렇게 assets/ 까지 전체 경로 입력 필요함
-            title: Text(name2[i]),
+            leading: Image.asset('assets/koko1.png', width: 100,),  // 앱에서는  이렇게 assets/ 까지 전체 경로 입력 필요함
+            title: Text(name2[i].givenName),
           );
         },
       ),
