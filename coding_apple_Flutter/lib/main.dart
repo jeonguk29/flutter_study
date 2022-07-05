@@ -23,12 +23,6 @@ class _MyAppState extends State<MyApp> {
     if (status.isGranted) {
       print('허락됨');   // 허락하면 이거 실행됨
      var contacts = await ContactsService.getContacts(); // 이렇게 하면 연락처 다나옴   외울필요 x 그냥 패키지 사용법임
-      // 연락처 다나오는 함수를 사용해 변수에 넣어줌  그리고 이것도 오래 걸리는 코드라 await 사용하는걸 권장함
-      //print(contacts);
-      // 확인해보니 애뮬레이터에서 실제로 연락처 2개 저장하니까 [Instance of 'Contact', Instance of 'Contact'] 이런식으로 리스트로 출력됨
-      //print(contacts[0].displayName); // 실제 이름이나옴 . 찍으면 값 접근 가능함
-
-      // 폰에 연락처 강제로 추가하는 법
       /*
       var newPerson = Contact(); // class 인스턴스 뽑을때 new 생략 가능
       newPerson.givenName ="민수";
@@ -37,10 +31,8 @@ class _MyAppState extends State<MyApp> {
       // 색상 노란거 보니 await 지원 함
       */
 
-      // dart는 타입을 잘 지켜야함 아래에 total 변수는 숫자만 넣을수 있도록 했는데 중간에 문자 못 넣음 오류남
-      // 우리는 이제 리스트에 실제 연락처를 넣을 거임
-      setState((){
-        name2 = contacts;
+      setState((){  // 넣는것도 State 값변경이니까 setState 사용
+        name2 = contacts; // 전화번호 반환 리스트 담기 Contact 형객체들을 넣어줌
       });
     } else if (status.isDenied) {
       print('거절됨');
@@ -60,7 +52,10 @@ class _MyAppState extends State<MyApp> {
   AddName(New_name)  // 다양한 자료형 입력가능
   {
     setState(() {
-      name2.add(New_name); // 자동 스테이트 추가됨 그러면 자동 UI 반영됨 왜냐 스테이스 수정되면 자동 재 랜더링 하기때문
+      //ContactsService.addContact(New_name);
+      // 위에걸로 하면 앱 자체적인 전화번호부에 강제 추가 되는 거라 버튼 누르면 이름 보이고
+      name2.add(New_name); // 이건 리스트에 추가 하는거라 반복분돌려서 자동으로 보임 단 이렇게 했을때는 재랜더링시 값이 사라지지만
+      // 직접적으로 주석처리한 코드로 하면 폰에 자체적으로 저장됨
     });
   }
 
@@ -114,6 +109,8 @@ class DialogUI extends StatelessWidget {
   final AddNum;
   var inputData = TextEditingController();
   var inputData2 = '';
+  var newPerson2 = Contact(); // class 인스턴스 뽑을때 new 생략 가능 
+// Contact() 인스턴스여야 전화번호 리스트에 들어가니까 하나 생성후
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -131,7 +128,8 @@ class DialogUI extends StatelessWidget {
               ),
 
               TextButton(child: Text("완료"),onPressed: () {
-                AddName(inputData2);
+                newPerson2.givenName = inputData2;  // 생성한 Contact 객체에 입력한 이름을 넣고
+                AddName(newPerson2); // 객체 자체를 함수로 전송 하면됨
                 AddNum();
               }, ),
               TextButton(child: Text('취소'),
