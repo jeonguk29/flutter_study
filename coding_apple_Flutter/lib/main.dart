@@ -32,13 +32,13 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-
+/*
   void initState(){  // 유용한 함수인데 이 위젯 즉 Myapp 위젯이 처음 로드될때
     super.initState();  // 이안에 코드를 한번 실행함
     getPermission(); // 우리가 방금 허락 요청하는 함수도 여기에 넣으면 로드될때 실행될거임
     // 요즘은 이렇게 코드 안짬 사람들이 뜨자마자 저런거 허락해달라고 하면 혐오감 생겨서 필요할때만 뜨게 해야함
   }
-
+*/
 
   var a = 1;
   var name = "연락처앱";
@@ -65,24 +65,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Text(total.toString()),
-        onPressed: () {
-          showDialog(
-              barrierDismissible: false, //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
-              context: context,
-              builder: (context) {
-
-                return DialogUI(AddName : AddName, AddNum : AddNum);  // 함수도 이렇게 전송함  변수명 or 함수명만 전송
-              });
-        },
-      ),
       appBar: AppBar(
         title: Text(total.toString()),
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-          ),
+        actions: [  // 안에 아이콘 넣을수 있는데
+         IconButton(onPressed: (){ getPermission(); }, icon: Icon(Icons.contacts)) // 이렇게 앱바에 아이콘 버튼 만들어서 연락처 권한 허락 띄울거임
         ],
       ),
       bottomNavigationBar: Botoom_Main(),
@@ -95,6 +81,20 @@ class _MyAppState extends State<MyApp> {
           );
         },
       ),
+
+      floatingActionButton: FloatingActionButton(
+        child: Text(total.toString()),
+        onPressed: () {
+          showDialog(
+              barrierDismissible: false, //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+              context: context,
+              builder: (context) {
+
+                return DialogUI(AddName : AddName, AddNum : AddNum);  // 함수도 이렇게 전송함  변수명 or 함수명만 전송
+              });
+        },
+      ),
+
     );
   }
 }
