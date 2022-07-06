@@ -13,19 +13,8 @@ void main()
   print(blackPink.firstMember);
   print(bts.firstMember);
   
-  blackPink.firstMember = "코드팩토리";
-  bts.firstMember = "woogie";
 
-  print(blackPink.firstMember);
-  print(bts.firstMember);
 
-  //의문 1 왜  Getter 를 사용하는가?
-  print(blackPink.GetFirstMember()); // Getter  와 똑같은 기능을 수행하는 함수임
-
-  // 둘이 솔직히 기능적인 차이는 없다고 봐도 됨 
-  // 뉘앙스에 차인데  Getter 는 데이터를 간단하게 가공할때 사용하고 ex 첫번째 값만 가져온다던지 
-  // 함수는 로직이 많이 들어갈때 사용 
-  // 어떤 상황에서 겟터 쓰고 어떤 상황에서 함수를 쓰고 정해진건 없음   :개발하면서 자연스럽게 느낄수 있음
 
 
   
@@ -35,9 +24,9 @@ void main()
 //  Getter and Setter
 
 
-class Idol{  // Setter 사용 위해 final 과 const 지움 
-String name ;                
-List<String> members;      
+class Idol{ 
+final String name ;                //의문 2  immutable 프로그래밍 많이 해서 final 키워드 많이 넣는다고 했는데 
+final List<String> members;      
 
 
 Idol(this.name, this.members);   
@@ -67,10 +56,23 @@ String get firstMember{
   return this.members[0];
 }
 
-//setter                setter는 무조건 하나의 파라미터만 들어갈수 있음
+//setter                
+
+/*
 set firstMember(String name){
-  this.members[0] = name;
+  this.members[0] = name;                                           // final 키워드를 쓰면 이 값 변경 불가능임 
+  // 지금은 가능함 List는 final이어도 값 변경 가능함 dart : List 특징임 
 }
+
+
+set firstMember(List<String> members){
+  this.members = members;              // 하지만 이렇게 리스트를 받아서 아에 members를 바꾸는건 못함 
+
+}
+*/
+// 사실상 immutable 프로그래밍  할때는 setter가 쓸모 없어지는것임 실제 그런이유 때문에 현대 프로그래밍에서는 셋터 잘 사용안함
+// setter를 쓰게 되면 원래 의도했던 값을 못바꾸게 하려는 원래 의도에서 어긋나기 때문임 
+
 
 
 // getter 와 기능이 똑같은 함수 
