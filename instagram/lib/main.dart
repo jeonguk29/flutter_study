@@ -20,16 +20,33 @@ var a = TextStyle(
 
 );
 
-class MyApp extends StatelessWidget {
+
+/*
+      tab으로 페이지 나누는법 동적인 UI만드는법
+      1.state에 tab의 현재상태 저장
+      2.state에 따라 tab이 어떻게 보일지 작성
+        -> 3 유저가 쉽게 state 조작할수있게 ex 버튼을 만든다던지
+
+        꼭 tab이 아니어도 동적인 ui 만들고 싶으면 이단계 거치면 모든 만들수 있음
+
+       */
+
+class MyApp extends StatefulWidget {  //state 만들려면 StatefulWidget 이여야함
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  var tab = 0; // 버튼누르는거에 따라 보여지는화면 2가지니까 0,1 로 표현할거임
+  // 현재 0 이면 첫번째 화면
+  // 1.state에 tab의 현재상태 저장
+
+
+  @override
   Widget build(BuildContext context) {
-    /*
-    return MaterialApp(       // MaterialApp 밖으로 빼야 나중에 편해서 빼줄거임
-      home: Scaffold(),
-    );
-    */
+
 
     return Scaffold(
       appBar: AppBar(
@@ -41,17 +58,30 @@ class MyApp extends StatelessWidget {
             iconSize: 30,
           )
         ],
-      ),
-      body: Text('안녕', style: Theme.of(context).textTheme.bodyText2,),
-      /*
-      Theme.of()는 족보를 하나 입력할 수 있는데
-      그 족보에서 가장 가까운 ThemeData()를 찾아서 가져와주는 함수입니다.
-      그럼 위 예제처럼 그 안에서 bodyText2에 정의한 스타일을 꺼내올 수도 있는 것임
-      원하는 스타일을 딱 집어서 꺼내고 싶은 경우 쓰는 함수입니다.
 
-      현제 내부모  MaterialApp(
-        theme: style.theme,   여기를 찾음   그러면 글자 빨간색 됨
-       */
-    );
+      ),
+      //2.state에 따라 tab이 어떻게 보일지 작성   if문으로 써도 되지만  [] 이런 리스트 써도 쉬울수 있음
+      body: [Text('홈페이지'), Text('샵페이지')][tab], // 리스트안에 위젯널고 [0] 이런식으로 값 뽑음
+      // 이렇게 짜면 tab 즉 state에 따라 보여지는 화면이 달라짐
+
+      bottomNavigationBar: BottomNavigationBar(
+      showSelectedLabels: false,  // 아래 글자 나오는걸 안보이게함
+        showUnselectedLabels: false,
+        onTap: (i){ // 매개변수 하나 넣게 되어 있음 버튼 하나 누르면 0이되고 그 다음꺼 누르면 자동적으로 1이 됨
+         setState((){
+           tab = i;
+         });
+        }, // onpressed랑 똑같은 기능임 이안에 누르면 실행
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: '홈'),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag_outlined), label: '샵'),
+        ],
+      ),
+
+
+
+      );
+
+
   }
 }

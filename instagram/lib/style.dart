@@ -16,6 +16,8 @@ var theme = ThemeData(
     )
   ),
 
+
+
 //iconTheme: IconThemeData(color: Colors.grey),
 appBarTheme: AppBarTheme(   // 이렇게 길어졌을때 다른 파일에 넣어놓고 불러오기 가능
 color: Colors.white,
@@ -28,4 +30,13 @@ textTheme: TextTheme(
 bodyText2: TextStyle(color: Colors.red),
   bodyText1: TextStyle(color: Colors.blue),// 여기에 다양한 스타일 만들어 놓고 Theme.of()이걸로 가져다 쓸 수도 있는 것임
 ),
+
+bottomNavigationBarTheme: BottomNavigationBarThemeData(
+  selectedItemColor: Colors.black,
+),
+
+
+
 );
+
+
