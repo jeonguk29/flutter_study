@@ -115,7 +115,7 @@ class DialogUI extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
         child: SizedBox(
-          height: 300, width: 300,
+          height: 1000, width: 300,
           //padding: EdgeInsets.all(10),
 
           child: Column(
@@ -126,6 +126,93 @@ class DialogUI extends StatelessWidget {
                   inputData2 = text;
                 },// onPressd랑 비슷 이건 버튼 누르면 함수 실행해주세요이지만
               ),
+
+              // TextField 양옆에 아이콘 넣고 싶으면 icon: 파라미터
+              TextField(
+                decoration: InputDecoration(
+                  icon: Icon(Icons.star),
+                ),
+              ),
+              /*
+              icon: 파라미터 대신
+              prefixIcon:
+              suffixIcon:
+              이런 파라미터도 있습니다
+              */
+
+              TextField(
+                decoration: InputDecoration(
+
+                  enabledBorder: OutlineInputBorder(  //border 주려면 enabledBorder: 파라미터
+                    borderSide: BorderSide(
+                      color: Colors.green,
+                      width: 3.0,
+                    ),
+                  ),
+
+                ),
+              ),
+
+              TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(),
+                ),
+              ),
+
+              TextField( //테두리 둥글게 하고 싶으면 borderRadius :
+                decoration: InputDecoration(
+
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+
+                ),
+              ),
+              /*
+
+             OutlineInputBorder() 위젯은 상하좌우 테두리를 주고
+             UnderlineInputBorder() 위젯은 하단 테두리만 주고
+              InputBorder.none 위젯 쓰면 테두리를 없애줍니다.
+            이 위젯들 안에서 border 두께, 색상 이런거 커스터마이징하면 됩니다.
+            언제나 자동완성을 활용합시다.
+
+               */
+
+              //border 없애기 & 배경색 입히기
+              TextField(
+                decoration: InputDecoration(
+
+                    filled: true,
+                    fillColor: Colors.blue.shade100,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none, //borderSide: BorderSide.none 이건 테두리 선을 없애줍니다.
+                    )
+
+                ),
+              ),
+
+              //  근처에 힌트 띄우고 싶으면
+              TextField(
+                decoration: InputDecoration(
+                    hintText: 'hint',
+                    helperText: 'helper',
+                    labelText: 'label',
+                    counterText: 'counter'
+
+                    /*
+                    4개 중 원하는 것만 고르면 됩니다.
+                    이 글자들 스타일주고 싶으면
+
+                    hintStyle: TextStyle(color: Colors.green),
+
+                    이런 파라미터를 더해주면 됩니다.
+
+
+                     */
+                ),
+              ),
+
+
 
               TextButton(child: Text("완료"),onPressed: () {
                 newPerson2.givenName = inputData2;  // 생성한 Contact 객체에 입력한 이름을 넣고
