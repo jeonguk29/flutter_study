@@ -42,19 +42,16 @@ class MyApp extends StatelessWidget {
           )
         ],
       ),
-      body: Theme(
-        data: ThemeData(
+      body: Text('안녕', style: Theme.of(context).textTheme.bodyText2,),
+      /*
+      Theme.of()는 족보를 하나 입력할 수 있는데
+      그 족보에서 가장 가까운 ThemeData()를 찾아서 가져와주는 함수입니다.
+      그럼 위 예제처럼 그 안에서 bodyText2에 정의한 스타일을 꺼내올 수도 있는 것임
+      원하는 스타일을 딱 집어서 꺼내고 싶은 경우 쓰는 함수입니다.
 
-        ),
-        child: Container(  // 레이아웃 중간에 ThemeData() 생성가능 ex 얘의 자식부터는 모든 글자색이 달라졌으면 좋겠다
-          // Theme으로 감싸고 data 안에 ThemeData() 안에 스타일주면
-          // child 속성 위젯 이안에 자식들은 다 이 스타일을 따라감
-          // 위에 style.theme 이 아니라 원칙1 : 나랑 조금더 가까운 스타일 먼저 적용 하려고함
-
-        ),
-      ),
-      //TextButton(onPressed: (){},child: Text('안녕'),),
+      현제 내부모  MaterialApp(
+        theme: style.theme,   여기를 찾음   그러면 글자 빨간색 됨
+       */
     );
-
   }
 }
