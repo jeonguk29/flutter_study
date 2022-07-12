@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 //import './style.dart';  // main.dart랑 같은 경로에 있어서 그냥 이렇게 해주면됨
 import './style.dart' as style; // import 할때 변수 중복문제 해결 maindart에도 theme 변수 있을수 있으니
-
+import 'package:http/http.dart' as http; // 웹 서버로 데이터 요청, 보낼때 필요한 패키지
+import 'dart:convert';
 
 
 void main() {
   runApp(
-      MaterialApp(    // 스타일이 길어지면 외부 파일로 만들어서 가져올수 있음
-                      // 즉 긴코드를 다른 파일로 빼는법
-        // theme, 다른 파일 불러와서 다른 파일 변수 사용 가능함
-        theme: style.theme, // 이렇게 사용 가능함
+      MaterialApp(
+        theme: style.theme,
         home: MyApp()
     )
   );
@@ -21,15 +20,7 @@ var a = TextStyle(
 );
 
 
-/*
-      tab으로 페이지 나누는법 동적인 UI만드는법
-      1.state에 tab의 현재상태 저장
-      2.state에 따라 tab이 어떻게 보일지 작성
-        -> 3 유저가 쉽게 state 조작할수있게 ex 버튼을 만든다던지
 
-        꼭 tab이 아니어도 동적인 ui 만들고 싶으면 이단계 거치면 모든 만들수 있음
-
-       */
 
 class MyApp extends StatefulWidget {  //state 만들려면 StatefulWidget 이여야함
   const MyApp({Key? key}) : super(key: key);
@@ -39,9 +30,30 @@ class MyApp extends StatefulWidget {  //state 만들려면 StatefulWidget 이여
 }
 
 class _MyAppState extends State<MyApp> {
-  var tab = 0; // 버튼누르는거에 따라 보여지는화면 2가지니까 0,1 로 표현할거임
-  // 현재 0 이면 첫번째 화면
-  // 1.state에 tab의 현재상태 저장
+  var tab = 0;
+  var list = [1,2,3]; // 리스트는 이렇게 만듬
+  var map = {'name':'john', 'age':20};
+  // map 은 키 와 벨류로 구분 해서 만듬
+// 참고로 list와 map안에는 서로 list , map 넣어도 상관 없음 아무거나 다 넣을수 있음
+
+  getData()async{
+    // get요청  보낼때 이렇게
+    var result = await http.get(Uri.parse('https://codingapple1.github.io/app/data.json')); // 결과 반환 해주면 변수에 담아 쓰면됨
+    // http 함수도 오래걸리는 함수임 (전문용어로 Future) 그래서 await 붙어줌 await 쓰려면 함수 뒤에 async 키워드 필요
+    //print(result.body);  다 "" 로 되어있음  서버랑 주고받는 데이터는 오직 문자만 가능
+    var result2 = jsonDecode(result.body);
+    print(result2[0]['likes']);
+    //조작하기 쉬운 list, map같은 자료로 변환하려면 json.Decode() 여기에 넣었다가 빼면 됩니다.
+    // 현제 [{}] 이구조임  이걸 보니 리스트자료형 안에 map 자료형이 있는거임
+  }
+
+  @override
+  void initState(){  // 앱 로드 될때 바로 GET 하고 싶음 그럼 이렇게
+    super.initState();
+    // 여기다 코드 짜면 MyApp 이라는 커스텀 위젯이 로드될때 실행됨
+    getData();  //initState() 에는 await 사용 못해서 밖으로 따로 함수를 빼줌
+  }
+
 
   var name2 = ["김영숙", "홍길동", "피자집"];
 
@@ -61,33 +73,15 @@ class _MyAppState extends State<MyApp> {
         ],
 
       ),
-      //2.state에 따라 tab이 어떻게 보일지 작성   if문으로 써도 되지만  [] 이런 리스트 써도 쉬울수 있음
-      body: ListView.builder(
-      itemCount: 3,
-        itemBuilder: (context, i) {
-          return Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset('assets/koko1.png'),
-                Text("좋아요"),
-                Text("글쓴이"),
-                Text(name2[i]),
-
-              ],
-            ),
-          );
-        },  // 3번 반복
-      ),
-
+      body: [Home(), Text('샵페이지')][tab],  // 0과 1에 따라 보이는게 다름
       bottomNavigationBar: BottomNavigationBar(
-      showSelectedLabels: false,  // 아래 글자 나오는걸 안보이게함
+      showSelectedLabels: false,
         showUnselectedLabels: false,
-        onTap: (i){ // 매개변수 하나 넣게 되어 있음 버튼 하나 누르면 0이되고 그 다음꺼 누르면 자동적으로 1이 됨
+        onTap: (i){
          setState((){
            tab = i;
          });
-        }, // onpressed랑 똑같은 기능임 이안에 누르면 실행
+        },
         items: [
           BottomNavigationBarItem(
               label : '홈',
@@ -101,11 +95,33 @@ class _MyAppState extends State<MyApp> {
           )
         ],
       ),
-
-
-
       );
 
 
+  }
+}
+
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 3,
+      itemBuilder: (context, i) {
+        return Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 웹상 이미지 넣을수 있음
+              Image.network('https://mblogthumb-phinf.pstatic.net/MjAxNzAxMjZfMjEw/MDAxNDg1NDIxNjIxOTA2.yCkDe0TNtSfretPURTVrdDqay50odvbiNIyDGIG8bEgg._mge-2IK2a4RsLDkU-etvMmgNn-R66yPCFFKIKkut3Yg.JPEG.momossense/Deja_Vu_%28feat._Justin_Bieber%29_-_Single_2.jpg?type=w800'),
+              Text("좋아요"),
+              Text("글쓴이"),
+              Text('글내용'),
+            ],
+          ),
+        );
+      },  // 3번 반복
+    );
   }
 }
