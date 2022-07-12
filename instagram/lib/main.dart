@@ -27,23 +27,19 @@ class MyApp extends StatefulWidget {  //state 만들려면 StatefulWidget 이여
 
 class _MyAppState extends State<MyApp> {
   var tab = 0;
-  var list = [1,2,3]; // 리스트는 이렇게 만듬
-  var map = {'name':'john', 'age':20};
-  var mamber = [];
-  // map 은 키 와 벨류로 구분 해서 만듬
-// 참고로 list와 map안에는 서로 list , map 넣어도 상관 없음 아무거나 다 넣을수 있음
+  var data = [];
 
   getData()async{
-    // get요청  보낼때 이렇게
     var result = await http.get(Uri.parse('https://codingapple1.github.io/app/data.json')); // 결과 반환 해주면 변수에 담아 쓰면됨
-    if (result.statusCode == 200) {  // 에러 체크
-      this.mamber  = jsonDecode(result.body);
+    if (result.statusCode == 200) {  // 에러 체크  get 요청 성공시 200 나옴
+      // GET 요청 많이 해야하는 앱이라면 Dio라는 패키지 실전에서더 많이 사용함
+      var result2 = jsonDecode(result.body);
+      setState((){
+        data = result2; // 뭔가 많이 변경 될거 같아서 스테이트에 저장 변경하는 거니까 setState 안에
+      });
     } else {
       throw Exception('실패함ㅅㄱ');
     }
-    //print(result2[0]['likes']);
-    //조작하기 쉬운 list, map같은 자료로 변환하려면 json.Decode() 여기에 넣었다가 빼면 됩니다.
-    // 현제 [{}] 이구조임  이걸 보니 리스트자료형 안에 map 자료형이 있는거임
   }
 
   @override
@@ -71,7 +67,7 @@ class _MyAppState extends State<MyApp> {
         ],
 
       ),
-      body: [Home(mamber:mamber), Text('샵페이지')][tab],  // 0과 1에 따라 보이는게 다름
+      body: [Home(mamber:data), Text('샵페이지')][tab],  // 0과 1에 따라 보이는게 다름
       bottomNavigationBar: BottomNavigationBar(
       showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -101,33 +97,40 @@ class _MyAppState extends State<MyApp> {
 
 class Home extends StatelessWidget {
   const Home({Key? key, this.mamber}) : super(key: key);
-  final mamber;
+  final mamber; // state 자식 위젯으로 보내기 3단계 복습  부모가 보낸거 수정 안하니까 final로
   @override
   Widget build(BuildContext context) {
 
-    return ListView.builder(
-      itemCount: 3,
-      itemBuilder: (context, i) {
-        return Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /*
+    // 빨간줄 없에기
+    //내가 찾은거 : 데이터 목록의 길이를 지정해야 빨간줄 안나옴  // https://stackoverflow.com/questions/54977982/rangeerror-index-invalid-value-valid-value-range-is-empty-0 참고
+    //코딩애플 : 빨간줄 뜨는 이유는 서버에서 데이터 들어오기도 전에 data[0]['content'] 해서 에러 남
+    // 들어오기도 전에 하면 비어 있기 때문임
+    /*
+      방지 data에 뭐 들어오면 보여달라고 코드 짜야함
 
-              [{id: 0, image: https://codingapple1.github.io/app/img0.jpg, likes: 5, date: July 25, content: 등을 대라 등대, liked: false, user: John Kim}, {id: 1, image: https://codingapple1.github.io/app/img1.jpg, likes: 22, date: Aug 3, content: 요즘 폰카는 성능이 좋습니다, liked: false, user: Hilton_m}, {id: 2, image: https://codingapple1.github.io/app/img2.jpg, likes: 10, date: Nov 30, content: 기린바보 😵, liked: false, user: rimvely1}]
+       */
+    if (mamber.isNotEmpty) { // 리스트 안 비어 있는지 물어보는 코드임
+      return ListView.builder(
+        itemCount: mamber.length,
+        itemBuilder: (context, i) {
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.network(mamber[i]['image']),
+                Text(mamber[i]['id'].toString()),
+                Text(mamber[i]['likes'].toString()),
+                Text(mamber[i]['date'].toString()),
+                Text(mamber[i]['content'].toString()),
+                Text(mamber[i]['liked'].toString()),
+                Text(mamber[i]['user'].toString()),
+              ],
+            );
+        }); // 3번 반복
+    }
+    else{  //데이터 들오기도 전에 뿌리려고 하면 아레 메세지가 화면 출력 된후 나옴
+      return CircularProgressIndicator();
+      //Text('로딩중입니다');
+    }
 
-               */
-              Image.network(mamber[i]['image']),
-              Text(mamber[i]['id'].toString()),
-              Text(mamber[i]['likes'].toString()),
-              Text(mamber[i]['date'].toString()),
-              Text(mamber[i]['content'].toString()),
-              Text(mamber[i]['liked'].toString()),
-              Text(mamber[i]['user'].toString()),
-            ],
-          ),
-        );
-      },  // 3번 반복
-    );
+    }
   }
-}
