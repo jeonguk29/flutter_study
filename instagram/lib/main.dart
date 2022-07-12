@@ -43,6 +43,7 @@ class _MyAppState extends State<MyApp> {
   // 현재 0 이면 첫번째 화면
   // 1.state에 tab의 현재상태 저장
 
+  var name2 = ["김영숙", "홍길동", "피자집"];
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +62,23 @@ class _MyAppState extends State<MyApp> {
 
       ),
       //2.state에 따라 tab이 어떻게 보일지 작성   if문으로 써도 되지만  [] 이런 리스트 써도 쉬울수 있음
-      body: [Text('홈페이지'), Text('샵페이지')][tab], // 리스트안에 위젯널고 [0] 이런식으로 값 뽑음
-      // 이렇게 짜면 tab 즉 state에 따라 보여지는 화면이 달라짐
+      body: ListView.builder(
+      itemCount: 3,
+        itemBuilder: (context, i) {
+          return Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset('assets/koko1.png'),
+                Text("좋아요"),
+                Text("글쓴이"),
+                Text(name2[i]),
+
+              ],
+            ),
+          );
+        },  // 3번 반복
+      ),
 
       bottomNavigationBar: BottomNavigationBar(
       showSelectedLabels: false,  // 아래 글자 나오는걸 안보이게함
@@ -73,8 +89,16 @@ class _MyAppState extends State<MyApp> {
          });
         }, // onpressed랑 똑같은 기능임 이안에 누르면 실행
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag_outlined), label: '샵'),
+          BottomNavigationBarItem(
+              label : '홈',
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home)
+          ),
+          BottomNavigationBarItem(
+              label : '샵',
+              icon: Icon(Icons.shopping_bag_outlined),
+              activeIcon: Icon(Icons.shopping_bag)
+          )
         ],
       ),
 

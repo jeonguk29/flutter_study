@@ -9,8 +9,9 @@ void main(){
 
   Lecture<int> lecture2 = Lecture(123, 'lecture2');
   
-  lecture2.printIdType();
-
+  lecture2.printIdType();  // 이렇게 하면 int형이 나옴 
+  
+  // 즉 Generic은 type을 외부에서 변수처럼 받아서 사용할수 있도록 해주는 것임 
 }
 
 // Generic - 타입을 외부에서 받을때 사용 
@@ -24,4 +25,15 @@ class Lecture<T>{ // T말고 어떤 이름이던 상관 없음
   void printIdType(){
     print(id.runtimeType);
   }
+
+
+/*
+
+
+Lecture<String, String> lecture1 = Lecture('123', 'lecture1');
+
+class Lecture<T, X>{         이렇게 타입을 2개 넣을수도 있음 
+  final T id; 
+  final X name;
+*/
 }

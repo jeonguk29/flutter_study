@@ -27,11 +27,13 @@ titleTextStyle: TextStyle(color: Colors.black, fontSize: 25.0),
 ),
 
 textTheme: TextTheme(
-bodyText2: TextStyle(color: Colors.red),
+bodyText2: TextStyle(color: Colors.black),
   bodyText1: TextStyle(color: Colors.blue),// 여기에 다양한 스타일 만들어 놓고 Theme.of()이걸로 가져다 쓸 수도 있는 것임
 ),
 
 bottomNavigationBarTheme: BottomNavigationBarThemeData(
+  backgroundColor: Colors.white,
+  elevation: 2,
   selectedItemColor: Colors.black,
 ),
 
