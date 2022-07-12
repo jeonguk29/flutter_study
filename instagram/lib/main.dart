@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './style.dart' as style; // import 할때 변수 중복문제 해결 maindart에도 theme 변수 있을수 있으니
 import 'package:http/http.dart' as http; // 웹 서버로 데이터 요청, 보낼때 필요한 패키지
 import 'dart:convert';
-
+import 'package:flutter/rendering.dart';// 스크롤 관련 유용한 함수들 들어있음
 
 void main() {
   runApp(
@@ -95,34 +95,61 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class Home extends StatelessWidget {
+/*
+스크롤바 높이 측정하려면 우선 listview 담은 곳이 statefulwidget 이여야함
+ */
+
+class Home extends StatefulWidget {  // statefulwidget은 부모가 보낸state 등록은 첫 class에
+  // 사용은 두번째 class에 해야함
   const Home({Key? key, this.mamber}) : super(key: key);
-  final mamber; // state 자식 위젯으로 보내기 3단계 복습  부모가 보낸거 수정 안하니까 final로
+  final mamber;
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+  /*
+    그래서 위에 있던 클레스 변수 사용을 하기 위해
+    widget.mamber 이런식으로 해줘야함
+     */
+  var scroll = ScrollController(); //스크롤 높이 저장할 state 하나 만들기
+  // ScrollController() : Scroll 같은 정보를 쉽게 저장할수 있도록 저장함을 만들어 주는놈
+  void initState() {
+    super.initState();
+    scroll.addListener((){
+      // addListener 왼쪽에 있는 변수가 변할때마다  이아래 코드 실행해 달라는 유용한 함수임
+      //print(scroll.position.pixels); // 스크롤바 내린 높이 출력함 (위에서 부터 얼마나 스크롤이 됬는지)
+      // maxScrollExtent 스크롤바 최대 내릴수 있는 높이
+      //userScrollDirection : user가 어느 방향으로 스크롤하는지
+
+      if(scroll.position.pixels == scroll.position.maxScrollExtent){ // 맨 밑까지 스크롤 했는지 체크 가능
+        print('같음');
+        // 여기서 추가 게시물 GET으로 요청 하면 더 나오게 코드 짜면됨
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
-    // 빨간줄 없에기
-    //내가 찾은거 : 데이터 목록의 길이를 지정해야 빨간줄 안나옴  // https://stackoverflow.com/questions/54977982/rangeerror-index-invalid-value-valid-value-range-is-empty-0 참고
-    //코딩애플 : 빨간줄 뜨는 이유는 서버에서 데이터 들어오기도 전에 data[0]['content'] 해서 에러 남
-    // 들어오기도 전에 하면 비어 있기 때문임
-    /*
-      방지 data에 뭐 들어오면 보여달라고 코드 짜야함
 
-       */
-    if (mamber.isNotEmpty) { // 리스트 안 비어 있는지 물어보는 코드임
+    if (widget.mamber.isNotEmpty) { // 리스트 안 비어 있는지 물어보는 코드임
       return ListView.builder(
-        itemCount: mamber.length,
+        itemCount: widget.mamber.length,
+        controller: scroll, // ListView가 스크롤될 때 마다 스크롤 위치정보들이 scroll 변수에 기록됩니다.
+          // 위치 측정은 스크롤 움직일때마다 해야함 (바닥인지 계속 체크해야함)
         itemBuilder: (context, i) {
           return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.network(mamber[i]['image']),
-                Text(mamber[i]['id'].toString()),
-                Text(mamber[i]['likes'].toString()),
-                Text(mamber[i]['date'].toString()),
-                Text(mamber[i]['content'].toString()),
-                Text(mamber[i]['liked'].toString()),
-                Text(mamber[i]['user'].toString()),
+                Image.network(widget.mamber[i]['image']),
+                Text('id ${widget.mamber[i]['id'].toString()}'),   // 글자 중간에 변수 삽입
+                Text('좋아요 ${widget.mamber[i]['likes'].toString()}'),
+                Text('날짜 ${widget.mamber[i]['date'].toString()}'),
+                Text('내용 ${widget.mamber[i]['content'].toString()}'),
+                Text(widget.mamber[i]['liked'].toString()),
+                Text('글쓴이 ${widget.mamber[i]['user'].toString()}'),
               ],
             );
         }); // 3번 반복
@@ -133,4 +160,4 @@ class Home extends StatelessWidget {
     }
 
     }
-  }
+}
