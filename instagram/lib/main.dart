@@ -101,31 +101,32 @@ class _MyAppState extends State<MyApp> {
 
 class Home extends StatefulWidget {  // statefulwidget은 부모가 보낸state 등록은 첫 class에
   // 사용은 두번째 class에 해야함
-  const Home({Key? key, this.mamber}) : super(key: key);
-  final mamber;
+  Home({Key? key, required this.mamber}) : super(key: key);
+  List<dynamic> mamber;
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  AddData()async{
+    var result = await http.get(Uri.parse('https://codingapple1.github.io/app/more1.json')); // 결과 반환 해주면 변수에 담아 쓰면됨
+    if (result.statusCode == 200) {
+      var result2 = jsonDecode(result.body);
+      setState((){
+        widget.mamber.add(result2);
+      });
+    } else {
+      throw Exception('실패함ㅅㄱ');
+    }
+  }
 
-  /*
-    그래서 위에 있던 클레스 변수 사용을 하기 위해
-    widget.mamber 이런식으로 해줘야함
-     */
-  var scroll = ScrollController(); //스크롤 높이 저장할 state 하나 만들기
-  // ScrollController() : Scroll 같은 정보를 쉽게 저장할수 있도록 저장함을 만들어 주는놈
+
+  var scroll = ScrollController();
   void initState() {
     super.initState();
     scroll.addListener((){
-      // addListener 왼쪽에 있는 변수가 변할때마다  이아래 코드 실행해 달라는 유용한 함수임
-      //print(scroll.position.pixels); // 스크롤바 내린 높이 출력함 (위에서 부터 얼마나 스크롤이 됬는지)
-      // maxScrollExtent 스크롤바 최대 내릴수 있는 높이
-      //userScrollDirection : user가 어느 방향으로 스크롤하는지
-
       if(scroll.position.pixels == scroll.position.maxScrollExtent){ // 맨 밑까지 스크롤 했는지 체크 가능
-        print('같음');
-        // 여기서 추가 게시물 GET으로 요청 하면 더 나오게 코드 짜면됨
+        AddData();
       }
     });
   }
