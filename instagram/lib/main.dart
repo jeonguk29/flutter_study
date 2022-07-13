@@ -116,11 +116,29 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int get = 0; // get 요청 횟수
+
+  getStatus(){
+    setState(() {
+      get++;
+    });
+  }
 
   getMore() async {
-    var result = await http.get(Uri.parse('https://codingapple1.github.io/app/more1.json'));
-    var result2 = jsonDecode(result.body);
-    widget.addData(result2); // 함수도 똑같이 widget 붙여서 사용
+    if(get == 0) {
+      var result = await http.get(
+          Uri.parse('https://codingapple1.github.io/app/more1.json'));
+      var result2 = jsonDecode(result.body);
+      widget.addData(result2); // 함수도 똑같이 widget 붙여서 사용
+      getStatus();
+    }
+    else{
+      var result3 = await http.get(Uri.parse('https://codingapple1.github.io/app/more2.json'));
+      var result4 = jsonDecode(result3.body);
+      widget.addData(result4); // 함수도 똑같이 widget 붙여서 사용
+    }
+
+
   }
 
   /*
@@ -138,8 +156,8 @@ class _HomeState extends State<Home> {
       //userScrollDirection : user가 어느 방향으로 스크롤하는지
 
       if(scroll.position.pixels == scroll.position.maxScrollExtent){ // 맨 밑까지 스크롤 했는지 체크 가능
+              getMore();
         //print('같음');
-        getMore();
       }
     });
   }
