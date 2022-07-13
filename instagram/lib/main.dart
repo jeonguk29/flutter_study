@@ -8,9 +8,9 @@ import 'package:flutter/rendering.dart';// 스크롤 관련 유용한 함수들 
 void main() {
   runApp(
       MaterialApp(
-        theme: style.theme,
-        home: MyApp()
-    )
+          theme: style.theme,
+          home: MyApp()
+      )
   );
 }
 
@@ -29,6 +29,11 @@ class _MyAppState extends State<MyApp> {
   var tab = 0;
   var data = [];
 
+  addData(a){
+    setState(() {
+      data.add(a);
+    });
+  }
   getData()async{
     var result = await http.get(Uri.parse('https://codingapple1.github.io/app/data.json')); // 결과 반환 해주면 변수에 담아 쓰면됨
     if (result.statusCode == 200) {  // 에러 체크  get 요청 성공시 200 나옴
@@ -67,14 +72,14 @@ class _MyAppState extends State<MyApp> {
         ],
 
       ),
-      body: [Home(mamber:data), Text('샵페이지')][tab],  // 0과 1에 따라 보이는게 다름
+      body: [Home(mamber:data,addData:addData), Text('샵페이지')][tab],  // 0과 1에 따라 보이는게 다름
       bottomNavigationBar: BottomNavigationBar(
-      showSelectedLabels: false,
+        showSelectedLabels: false,
         showUnselectedLabels: false,
         onTap: (i){
-         setState((){
-           tab = i;
-         });
+          setState((){
+            tab = i;
+          });
         },
         items: [
           BottomNavigationBarItem(
@@ -89,7 +94,7 @@ class _MyAppState extends State<MyApp> {
           )
         ],
       ),
-      );
+    );
 
 
   }
@@ -99,34 +104,42 @@ class _MyAppState extends State<MyApp> {
 스크롤바 높이 측정하려면 우선 listview 담은 곳이 statefulwidget 이여야함
  */
 
-class Home extends StatefulWidget {  // statefulwidget은 부모가 보낸state 등록은 첫 class에
+class Home extends StatefulWidget {
+
+  // statefulwidget은 부모가 보낸state 등록은 첫 class에
   // 사용은 두번째 class에 해야함
-  Home({Key? key, required this.mamber}) : super(key: key);
-  List<dynamic> mamber;
+  const Home({Key? key, this.mamber, this.addData}) : super(key: key);
+  final mamber;
+  final addData;
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  AddData()async{
-    var result = await http.get(Uri.parse('https://codingapple1.github.io/app/more1.json')); // 결과 반환 해주면 변수에 담아 쓰면됨
-    if (result.statusCode == 200) {
-      var result2 = jsonDecode(result.body);
-      setState((){
-        widget.mamber.add(result2);
-      });
-    } else {
-      throw Exception('실패함ㅅㄱ');
-    }
+
+  getMore() async {
+    var result = await http.get(Uri.parse('https://codingapple1.github.io/app/more1.json'));
+    var result2 = jsonDecode(result.body);
+    widget.addData(result2); // 함수도 똑같이 widget 붙여서 사용
   }
 
-
-  var scroll = ScrollController();
+  /*
+    그래서 위에 있던 클레스 변수 사용을 하기 위해
+    widget.mamber 이런식으로 해줘야함
+     */
+  var scroll = ScrollController(); //스크롤 높이 저장할 state 하나 만들기
+  // ScrollController() : Scroll 같은 정보를 쉽게 저장할수 있도록 저장함을 만들어 주는놈
   void initState() {
     super.initState();
     scroll.addListener((){
+      // addListener 왼쪽에 있는 변수가 변할때마다  이아래 코드 실행해 달라는 유용한 함수임
+      //print(scroll.position.pixels); // 스크롤바 내린 높이 출력함 (위에서 부터 얼마나 스크롤이 됬는지)
+      // maxScrollExtent 스크롤바 최대 내릴수 있는 높이
+      //userScrollDirection : user가 어느 방향으로 스크롤하는지
+
       if(scroll.position.pixels == scroll.position.maxScrollExtent){ // 맨 밑까지 스크롤 했는지 체크 가능
-        AddData();
+        //print('같음');
+        getMore();
       }
     });
   }
@@ -137,11 +150,11 @@ class _HomeState extends State<Home> {
 
     if (widget.mamber.isNotEmpty) { // 리스트 안 비어 있는지 물어보는 코드임
       return ListView.builder(
-        itemCount: widget.mamber.length,
-        controller: scroll, // ListView가 스크롤될 때 마다 스크롤 위치정보들이 scroll 변수에 기록됩니다.
+          itemCount: widget.mamber.length,
+          controller: scroll, // ListView가 스크롤될 때 마다 스크롤 위치정보들이 scroll 변수에 기록됩니다.
           // 위치 측정은 스크롤 움직일때마다 해야함 (바닥인지 계속 체크해야함)
-        itemBuilder: (context, i) {
-          return Column(
+          itemBuilder: (context, i) {
+            return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.network(widget.mamber[i]['image']),
@@ -153,12 +166,12 @@ class _HomeState extends State<Home> {
                 Text('글쓴이 ${widget.mamber[i]['user'].toString()}'),
               ],
             );
-        }); // 3번 반복
+          }); // 3번 반복
     }
     else{  //데이터 들오기도 전에 뿌리려고 하면 아레 메세지가 화면 출력 된후 나옴
       return CircularProgressIndicator();
       //Text('로딩중입니다');
     }
 
-    }
+  }
 }
