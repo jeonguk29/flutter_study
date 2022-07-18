@@ -84,15 +84,16 @@ class _MyAppState extends State<MyApp> {
                 setState(() {
                   userImage = File(image.path);  // 경로같은거 저장해서 꺼내쓰는게 일반적임
                   // 이렇게 if 문으로 사용자가 하는건 널이아닌지 체크해야 오류 안나고 예외처리 가능함
-                  // 그리고 userImage 는 state라 이렇게 해줌 
+                  // 그리고 userImage 는 state라 이렇게 해줌
                 });
-
                 }
 
 
 
+
+
               Navigator.push(context,// context 는 MaterialApp 들어있는 context 넣어야함 위에   Widget build(BuildContext context) 이걸 쓰는 거임
-               MaterialPageRoute(builder: (context) => Upload() ),
+               MaterialPageRoute(builder: (context) => Upload(userImage : userImage) ),// 자식에게 전송
 
               );
             },
@@ -225,7 +226,8 @@ class _HomeState extends State<Home> {
 
 
 class Upload extends StatelessWidget {
-  const Upload({Key? key}) : super(key: key);
+  const Upload({Key? key, this.userImage}) : super(key: key);
+  final userImage;
   @override
 
   Widget build(BuildContext context) {
@@ -234,7 +236,14 @@ class Upload extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              width: 350,
+              child: Image.file(userImage),// 파일 경로로 이미지 띄우는 법
+
+              // 이렇게 사이즈 조절 하는 방법 말고도 다양한 방법있음
+            ),
             Text('이미지업로드화면'),
+            TextField(),
             IconButton(  // 화면 닫는 버튼
                 onPressed: (){
                   Navigator.pop(context); // 다이얼 로그 했던거랑 유사 MaterialApp 포함한 context 넣어야함  요 context는   Widget build(BuildContext context) 요건데 위로위로
