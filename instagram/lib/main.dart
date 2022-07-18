@@ -4,6 +4,8 @@ import './style.dart' as style; // import 할때 변수 중복문제 해결 main
 import 'package:http/http.dart' as http; // 웹 서버로 데이터 요청, 보낼때 필요한 패키지
 import 'dart:convert';
 import 'package:flutter/rendering.dart';// 스크롤 관련 유용한 함수들 들어있음
+import 'package:image_picker/image_picker.dart'; // 이미지 권한 관련 이미지 관련 함수들 들어있음
+import 'dart:io'; // 파일 다루는 유용한 함수가 들어있는 기본 패키지입니다.
 
 void main() {
   runApp(
@@ -28,6 +30,7 @@ class MyApp extends StatefulWidget {  //state 만들려면 StatefulWidget 이여
 class _MyAppState extends State<MyApp> {
   var tab = 0;
   var data = [];
+  var userImage;
 
   addData(a){
     setState(() {
@@ -66,17 +69,30 @@ class _MyAppState extends State<MyApp> {
         actions: [
           IconButton(
             icon: Icon(Icons.add_box_outlined),
-            onPressed: (){
-              Navigator.push(context,// context 는 MaterialApp 들어있는 context 넣어야함 위에   Widget build(BuildContext context) 이걸 쓰는 거임
-               MaterialPageRoute(builder: (context) => Upload() )
-                /*
-                MaterialPageRoute(builder: (context) {return Text('새페이지'); })
-                 return Text('새페이지') 이렇게 하면 여기 넣은 위젯이 새로운 페이지로 뜸
-                Scaffold() 이런거 넣고 레이아웃 넣으면 멋질거임
+            onPressed: () async{ // await  하려면 있어야함
+              // 이미지 패키지 사용 방법일뿐
+              var picker = ImagePicker();
+              var image = await picker.pickImage(source: ImageSource.gallery);
+              // source: ImageSource.gallery  사진 고르기
+              // source: ImageSource.camera   카메라 열기
+              // 비디오 고르고 싶으면 picker.pickVideo() 하면 됨
+              // 여러 이미지 고르고 싶을때는 picker.pickMultiImage()  여러개 고르면 리스트 안에 다 저장되서 꺼내쓰면 됨
 
-                MaterialPageRoute(builder: (context) => Text('새페이지') )
-                return 키워드 하나면  이렇게 생략 줄일수 있음 return 생략해도 되는 Arrow Function 문법임
-                 */
+
+              // 선택한 이미지 위젯으로 보여주기
+              if(image != null) {
+                setState(() {
+                  userImage = File(image.path);  // 경로같은거 저장해서 꺼내쓰는게 일반적임
+                  // 이렇게 if 문으로 사용자가 하는건 널이아닌지 체크해야 오류 안나고 예외처리 가능함
+                  // 그리고 userImage 는 state라 이렇게 해줌 
+                });
+
+                }
+
+
+
+              Navigator.push(context,// context 는 MaterialApp 들어있는 context 넣어야함 위에   Widget build(BuildContext context) 이걸 쓰는 거임
+               MaterialPageRoute(builder: (context) => Upload() ),
 
               );
             },
