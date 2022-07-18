@@ -66,7 +66,20 @@ class _MyAppState extends State<MyApp> {
         actions: [
           IconButton(
             icon: Icon(Icons.add_box_outlined),
-            onPressed: (){},
+            onPressed: (){
+              Navigator.push(context,// context 는 MaterialApp 들어있는 context 넣어야함 위에   Widget build(BuildContext context) 이걸 쓰는 거임
+               MaterialPageRoute(builder: (context) => Upload() )
+                /*
+                MaterialPageRoute(builder: (context) {return Text('새페이지'); })
+                 return Text('새페이지') 이렇게 하면 여기 넣은 위젯이 새로운 페이지로 뜸
+                Scaffold() 이런거 넣고 레이아웃 넣으면 멋질거임
+
+                MaterialPageRoute(builder: (context) => Text('새페이지') )
+                return 키워드 하나면  이렇게 생략 줄일수 있음 return 생략해도 되는 Arrow Function 문법임
+                 */
+
+              );
+            },
             iconSize: 30,
           )
         ],
@@ -190,6 +203,32 @@ class _HomeState extends State<Home> {
       return CircularProgressIndicator();
       //Text('로딩중입니다');
     }
+
+  }
+}
+
+
+class Upload extends StatelessWidget {
+  const Upload({Key? key}) : super(key: key);
+  @override
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('이미지업로드화면'),
+            IconButton(  // 화면 닫는 버튼
+                onPressed: (){
+                  Navigator.pop(context); // 다이얼 로그 했던거랑 유사 MaterialApp 포함한 context 넣어야함  요 context는   Widget build(BuildContext context) 요건데 위로위로
+                  // 가다보면 MaterialApp 도 있을것임
+                },
+                icon: Icon(Icons.close)
+            ),
+          ],
+        )
+    );
 
   }
 }
