@@ -1,13 +1,23 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 //import './style.dart';  // main.dart랑 같은 경로에 있어서 그냥 이렇게 해주면됨
 import './style.dart' as style; // import 할때 변수 중복문제 해결 maindart에도 theme 변수 있을수 있으니
 import 'package:http/http.dart' as http; // 웹 서버로 데이터 요청, 보낼때 필요한 패키지
-import 'dart:convert';
 import 'package:flutter/rendering.dart';// 스크롤 관련 유용한 함수들 들어있음
 import 'package:image_picker/image_picker.dart'; // 이미지 권한 관련 이미지 관련 함수들 들어있음
 import 'dart:io'; // 파일 다루는 유용한 함수가 들어있는 기본 패키지입니다.
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+
+
+/*
+앱을 껐다가 켜면 state는 초기화됩니다.
+그래서 state 안에 있던걸 어디 저장해두고 싶으면
+서버로 보내서 Database에 저장을 하든가 아니면
+shared preferences 라는 로컬 공간에 저장하면 됩니다.
+
+중요한건 서버로 덜중요한건 로컬에 저장하는게 좋은 관습임
+ */
 
 void main() {
   runApp(
@@ -37,6 +47,52 @@ class _MyAppState extends State<MyApp> {
   var userLikes;
   var userDate;
   var userName;
+
+  // shared preferences 에 데이터 저장하는 법
+  saveData() async {
+    var storage = await SharedPreferences.getInstance(); // 저장공간 오픈하는법  기초 셋팅
+    storage.setString('name',
+        'john'); // storage.setString('작명','저장할데이터')   key : value 형태로 저장 하는 거임
+    storage.setStringList('name', ['john', 'park']);
+    storage.remove('name'); // 데이터 삭제 저장한 데이터 삭제 하는 방법임
+    var result = storage.get('name'); // 데이터 출력 하는 방법
+
+    // map 자료 저장하려면 JSON으로 바꿔서 저장해야함
+    var map = {'age', 20};
+    storage.setString('map', jsonEncode(map)); // map 자료 넘겨주면 "" 다 붙여서 문자열로 만들어줌
+    var result2 = storage.getString('map') ?? "없는데요";
+    print(jsonDecode(
+        result2)); // jsonDecode 안에는 Stirng? 은 뷸가 확실해야함 그래서 위에 처럼 널체크 필요
+    print(jsonDecode(result2)['age']); // 이렇게 하면 map에서 원하는 데이터 꺼내 쓸수 있음
+  }
+
+    /*
+    storage.setString('name', 'john');
+    storage.setBool('name', true);
+    storage.setInt('name', 20);
+    storage.setDouble('name', 20.5);
+    storage.setStringList('name', ['john', 'park']);
+    실은 숫자, 문자, Bool, List<String> 자료형도 저장가능합니다.
+    참고로 List<int> 이런거 저장 못해서 List<String>으로 바꿔서 저장하든 해야합니다.
+    저것들 출력하려면 set어쩌구를 get어쩌구로만 바꿔주면 출력가능합니다.
+
+    꺼낼때도
+    storage.getString();
+    storage.getBool();
+    storage.getInt();
+    storage.getDouble();
+    storage.getStringList();
+     */
+
+
+
+  void initState(){  // 앱 로드 될때 바로 GET 하고 싶음 그럼 이렇게
+    saveData();
+    super.initState();
+    // 여기다 코드 짜면 MyApp 이라는 커스텀 위젯이 로드될때 실행됨
+    getData();  //initState() 에는 await 사용 못해서 밖으로 따로 함수를 빼줌
+  }
+
 
   setUserContent(a){
     setState((){
@@ -94,11 +150,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  void initState(){  // 앱 로드 될때 바로 GET 하고 싶음 그럼 이렇게
-    super.initState();
-    // 여기다 코드 짜면 MyApp 이라는 커스텀 위젯이 로드될때 실행됨
-    getData();  //initState() 에는 await 사용 못해서 밖으로 따로 함수를 빼줌
-  }
 
 
 
