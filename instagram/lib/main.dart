@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 //import './style.dart';  // main.dart랑 같은 경로에 있어서 그냥 이렇게 해주면됨
 import './style.dart' as style; // import 할때 변수 중복문제 해결 maindart에도 theme 변수 있을수 있으니
@@ -31,6 +33,29 @@ class _MyAppState extends State<MyApp> {
   var tab = 0;
   var data = [];
   var userImage;
+  var userContent; // 자식에서 입력받는 거니까 미리 부모가 자식에게 수정할수 있도록 함수 구현 해줘야함
+
+  setUserContent(a){
+    setState((){
+      userContent = a;
+    });
+  }
+
+  addMyData(){
+   var myData = {
+     'id': data.length, // 게시물 개수에 따라 id 정해지게
+    'image': userImage,
+    'likes': 5,
+    'date': 'July 25',
+    'content': userContent,
+    'liked': false,
+    'user': 'John Kim'
+   };
+    setState((){
+      data.insert(0, myData); //add 는 끝에 추가 되지만 insert는 몇번째 항목에 추가할지 결정 할수 있음
+    });
+  }
+
 
   addData(a){
     setState(() {
@@ -93,9 +118,9 @@ class _MyAppState extends State<MyApp> {
 
 
               Navigator.push(context,// context 는 MaterialApp 들어있는 context 넣어야함 위에   Widget build(BuildContext context) 이걸 쓰는 거임
-               MaterialPageRoute(builder: (context) => Upload(userImage : userImage) ),// 자식에게 전송
-
-              );
+               MaterialPageRoute(builder: (context) => Upload(userImage : userImage,
+                  setUserContent : setUserContent, addMyData : addMyData ))
+              );// 자식에게 전송
             },
             iconSize: 30,
           )
@@ -205,7 +230,12 @@ class _HomeState extends State<Home> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.network(widget.mamber[i]['image']),
+
+                // 1 == 1 ? '이거' : '저거' (삼항 연상자 문법) 조건식 ? 조건식이 참이면 실행할 코드 , 거짓이면 실행할 코드
+                widget.mamber[i]['image'].runtimeType == String
+                    ? Image.network(widget.mamber[i]['image']) // image.network() 에는 http 부터 시작하는 이미지만 가능함:
+                : Image.file(widget.mamber[i]['image']), // 유저가 선택한 이미지는 _File 타입입니다.
+
                 Text('id ${widget.mamber[i]['id'].toString()}'),   // 글자 중간에 변수 삽입
                 Text('좋아요 ${widget.mamber[i]['likes'].toString()}'),
                 Text('날짜 ${widget.mamber[i]['date'].toString()}'),
@@ -225,35 +255,105 @@ class _HomeState extends State<Home> {
 }
 
 
-class Upload extends StatelessWidget {
-  const Upload({Key? key, this.userImage}) : super(key: key);
+class Upload extends StatefulWidget {
+  const Upload({Key? key, this.userImage, this.setUserContent, this.addMyData}) : super(key: key);
   final userImage;
+  final setUserContent;
+  final addMyData;
+  @override
+  State<Upload> createState() => _UploadState();
+}
+
+class _UploadState extends State<Upload> {
   @override
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 350,
-              child: Image.file(userImage),// 파일 경로로 이미지 띄우는 법
+        //resizeToAvoidBottomInset: false,  스크롤 원하지 않을때 사용
+        appBar: AppBar(
+          actions: [IconButton(onPressed: (){
+           widget.addMyData(); // 버튼 누르면 누른 내용들 추가가 됨
+          }, icon: Icon(Icons.send))],
 
-              // 이렇게 사이즈 조절 하는 방법 말고도 다양한 방법있음
+        ),
+        body:
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children:
+                [
+                  IconButton(  // 화면 닫는 버튼
+                      onPressed: (){
+                        Navigator.pop(context); // 다이얼 로그 했던거랑 유사 MaterialApp 포함한 context 넣어야함  요 context는   Widget build(BuildContext context) 요건데 위로위로
+                        // 가다보면 MaterialApp 도 있을것임
+                      },
+                      icon: Icon(Icons.close)
+                  ),
+
+                  Container(
+                    width: 350,
+                    child: Image.file(widget.userImage),// 파일 경로로 이미지 띄우는 법
+                    // 이렇게 사이즈 조절 하는 방법 말고도 다양한 방법있음
+                  ),
+                  Text('이미지업로드화면'),
+
+                  TextField(onChanged: (text) { // onChanged: 에 이렇게 변수 하나 넣으주면 사용자가 입력한 글이 됨
+                      widget.setUserContent(text); // 사용자가 입력한거 값 바로 부모 state에 넣어줌
+                    },
+                  ),
+                  /*
+                  TextField(style: TextStyle(fontSize: 22, color: Colors.red),
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(hintText: '좋아요 개수를 입력해 주세요'),
+                    onChanged: (String str) {
+                      setState(() {
+                          likes = str;
+                      });
+                    },
+                  ),
+                  TextField(style: TextStyle(fontSize: 22, color: Colors.red),
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(hintText: '날짜를 입력해 주세요'),
+                    onChanged: (String str) {
+                      setState(() {
+                          data = str;
+                      });
+                    },
+                  ),
+                  TextField(style: TextStyle(fontSize: 22, color: Colors.red),
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(hintText: '내용을 입력해 주세요'),
+                    onChanged: (String str) {
+                      setState(() {
+                            context2 = str;
+                      });
+                    },
+                  ),
+                  TextField(style: TextStyle(fontSize: 22, color: Colors.red),
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(hintText: '진실 거짓을 입력해 주세요'),
+                    onChanged: (String str) {
+                      setState(() {
+                            liked = str;
+                      });
+                    },
+                  ),
+                  TextField(style: TextStyle(fontSize: 22, color: Colors.red),
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(hintText: '사용자 이름을 입력해 주세요'),
+                    onChanged: (String str) {
+                      setState(() {
+                              user = str;
+                      });
+                    },
+                  ),
+                  */
+                   
+
+                ],
+              )
             ),
-            Text('이미지업로드화면'),
-            TextField(),
-            IconButton(  // 화면 닫는 버튼
-                onPressed: (){
-                  Navigator.pop(context); // 다이얼 로그 했던거랑 유사 MaterialApp 포함한 context 넣어야함  요 context는   Widget build(BuildContext context) 요건데 위로위로
-                  // 가다보면 MaterialApp 도 있을것임
-                },
-                icon: Icon(Icons.close)
-            ),
-          ],
-        )
-    );
+        );
 
   }
 }
