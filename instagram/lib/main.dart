@@ -34,10 +34,28 @@ class _MyAppState extends State<MyApp> {
   var data = [];
   var userImage;
   var userContent; // 자식에서 입력받는 거니까 미리 부모가 자식에게 수정할수 있도록 함수 구현 해줘야함
+  var userLikes;
+  var userDate;
+  var userName;
 
   setUserContent(a){
     setState((){
       userContent = a;
+    });
+  }
+  setUserLikes(a){
+    setState((){
+      userLikes = a;
+    });
+  }
+  setUserDate(a){
+    setState((){
+      userDate = a;
+    });
+  }
+  setUserName(a){
+    setState((){
+      userName = a;
     });
   }
 
@@ -45,11 +63,11 @@ class _MyAppState extends State<MyApp> {
    var myData = {
      'id': data.length, // 게시물 개수에 따라 id 정해지게
     'image': userImage,
-    'likes': 5,
-    'date': 'July 25',
+    'likes': userLikes,
+    'date': userDate,
     'content': userContent,
     'liked': false,
-    'user': 'John Kim'
+    'user': userName,
    };
     setState((){
       data.insert(0, myData); //add 는 끝에 추가 되지만 insert는 몇번째 항목에 추가할지 결정 할수 있음
@@ -119,7 +137,11 @@ class _MyAppState extends State<MyApp> {
 
               Navigator.push(context,// context 는 MaterialApp 들어있는 context 넣어야함 위에   Widget build(BuildContext context) 이걸 쓰는 거임
                MaterialPageRoute(builder: (context) => Upload(userImage : userImage,
-                  setUserContent : setUserContent, addMyData : addMyData ))
+                  setUserContent : setUserContent,
+                   setUserLikes : setUserLikes,
+                   setUserDate : setUserDate,
+                   setUserName : setUserName,
+                   addMyData : addMyData ))
               );// 자식에게 전송
             },
             iconSize: 30,
@@ -256,10 +278,13 @@ class _HomeState extends State<Home> {
 
 
 class Upload extends StatefulWidget {
-  const Upload({Key? key, this.userImage, this.setUserContent, this.addMyData}) : super(key: key);
+  const Upload({Key? key, this.userImage, this.setUserContent, this.addMyData, this.setUserLikes, this.setUserDate, this.setUserName}) : super(key: key);
   final userImage;
   final setUserContent;
   final addMyData;
+  final setUserLikes;
+  final setUserDate;
+  final setUserName;
   @override
   State<Upload> createState() => _UploadState();
 }
@@ -296,59 +321,46 @@ class _UploadState extends State<Upload> {
                     // 이렇게 사이즈 조절 하는 방법 말고도 다양한 방법있음
                   ),
                   Text('이미지업로드화면'),
-
-                  TextField(onChanged: (text) { // onChanged: 에 이렇게 변수 하나 넣으주면 사용자가 입력한 글이 됨
-                      widget.setUserContent(text); // 사용자가 입력한거 값 바로 부모 state에 넣어줌
+                  TextField(style: TextStyle(fontSize: 22, color: Colors.red),
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(hintText: '내용을 입력해 주세요'),
+                    onChanged: (text) {
+                      setState(() {
+                        widget.setUserContent(text); // 사용자가 입력한거 값 바로 부모 state에 넣어줌
+                      });
                     },
                   ),
-                  /*
+
                   TextField(style: TextStyle(fontSize: 22, color: Colors.red),
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(hintText: '좋아요 개수를 입력해 주세요'),
-                    onChanged: (String str) {
+                    onChanged: (text) {
                       setState(() {
-                          likes = str;
+                        widget.setUserLikes(text); // 사용자가 입력한거 값 바로 부모 state에 넣어줌
                       });
                     },
                   ),
                   TextField(style: TextStyle(fontSize: 22, color: Colors.red),
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(hintText: '날짜를 입력해 주세요'),
-                    onChanged: (String str) {
+                    onChanged: (text) {
                       setState(() {
-                          data = str;
+                        widget.setUserDate(text); // 사용자가 입력한거 값 바로 부모 state에 넣어줌
                       });
                     },
                   ),
-                  TextField(style: TextStyle(fontSize: 22, color: Colors.red),
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(hintText: '내용을 입력해 주세요'),
-                    onChanged: (String str) {
-                      setState(() {
-                            context2 = str;
-                      });
-                    },
-                  ),
-                  TextField(style: TextStyle(fontSize: 22, color: Colors.red),
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(hintText: '진실 거짓을 입력해 주세요'),
-                    onChanged: (String str) {
-                      setState(() {
-                            liked = str;
-                      });
-                    },
-                  ),
+
                   TextField(style: TextStyle(fontSize: 22, color: Colors.red),
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(hintText: '사용자 이름을 입력해 주세요'),
-                    onChanged: (String str) {
+                    onChanged: (String text) {
                       setState(() {
-                              user = str;
+                        widget.setUserName(text); // 사용자가 입력한거 값 바로 부모 state에 넣어줌
                       });
                     },
                   ),
-                  */
-                   
+
+
 
                 ],
               )
