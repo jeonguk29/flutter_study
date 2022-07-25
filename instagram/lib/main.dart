@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import './style.dart';  // main.dart랑 같은 경로에 있어서 그냥 이렇게 해주면됨
 import './style.dart' as style; // import 할때 변수 중복문제 해결 maindart에도 theme 변수 있을수 있으니
@@ -8,6 +9,7 @@ import 'package:image_picker/image_picker.dart'; // 이미지 권한 관련 이�
 import 'dart:io'; // 파일 다루는 유용한 함수가 들어있는 기본 패키지입니다.
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 
 
 /*
@@ -54,7 +56,8 @@ class _MyAppState extends State<MyApp> {
 
     storage.setString('name',
         'john'); // storage.setString('작명','저장할데이터')   key : value 형태로 저장 하는 거임
-
+    var result3 = storage.get('name'); // 데이터 출력 하는 방법
+    print(result3);
     storage.setStringList('name', ['john', 'park']);
     storage.remove('name'); // 데이터 삭제 저장한 데이터 삭제 하는 방법임
     var result = storage.get('name'); // 데이터 출력 하는 방법
@@ -317,7 +320,34 @@ class _HomeState extends State<Home> {
                 Text('날짜 ${widget.mamber[i]['date'].toString()}'),
                 Text('내용 ${widget.mamber[i]['content'].toString()}'),
                 Text(widget.mamber[i]['liked'].toString()),
-                Text('글쓴이 ${widget.mamber[i]['user'].toString()}'),
+
+                // 글쓴이 누르면 글쓴이 프로필 들어가게 만들기  onpessed text에 만들려면 아래 GestureDetector 위젯으로 감싸고 구현 시키는 방법있음
+                  // GestureDetector 위젯으로 감쌓으면 다양한 기능을 사용자가 할때  원하는 위젯들을 실행 가능함
+                GestureDetector(
+                  child:Text('글쓴이 ${widget.mamber[i]['user'].toString()}'),
+                  onTap: (){
+                    Navigator.push(context,
+                        PageRouteBuilder(pageBuilder: (c,a1,a2) => Profile(),
+                        transitionsBuilder: (c,a1,a2, child) =>
+                            SlideTransition(  // 슬라이드 애니매이션은 이렇게 구현
+                              position: Tween(
+                                begin: Offset(-1.0, 0.0), // 시작 좌표
+                                end: Offset(0.0, 0.0),   // 최종 좌표
+                              ).animate(a1),
+                              child: child,
+                            )
+                          /*
+                            FadeTransition(opacity: a1,child: child),
+                          transitionDuration: Duration(milliseconds: 1500)// 밀리 세컨드 단위로 페이지 전환 애니메이션 속도조절 가능
+                         */
+                        )
+                        //CupertinoPageRoute(builder: (C) => Profile() 아이폰 스타일 화면 전환
+                    );
+                  },
+                  //onDoubleTap: , 이건 두번 딱딱 하면 뜨는 기능 이거 말고도 다양한 기능 제공
+                 // onHorizontalDragStart: , 왼쪽 스와이프 할때 기능 나오게
+                 // onScaleStart: , 확대 모션 취하면 기능 실행
+                ),
               ],
             );
           }); // 3번 반복
@@ -420,6 +450,17 @@ class _UploadState extends State<Upload> {
               )
             ),
         );
+  }
+}
 
+class Profile extends StatelessWidget {
+  const Profile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Text('프로필레이지'),
+    );
   }
 }
