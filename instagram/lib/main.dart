@@ -28,9 +28,12 @@ void main() {
   //store를 사용할 위젯들을 전부 ChangeNotifierProvider() 로 감싸면 됩니다.
   // 모든 위젯들이 사용할거면 MaterialApp() 을 감싸면 되겠군요.
   runApp(
-    ChangeNotifierProvider(
-      create: (c) => Store1(),
-      child: MaterialApp(
+    MultiProvider(  // store 여러개면  MultiProvider로 등록 해야함
+      providers: [
+        ChangeNotifierProvider(create: (c) => Store1()),
+        ChangeNotifierProvider(create: (c) => Store2()),
+      ],
+      child: MaterialApp( // 이제 Store1, Store2 둘다 사용 가능
           theme: style.theme,
           home: MyApp()
       ),
@@ -453,8 +456,6 @@ class _UploadState extends State<Upload> {
                     },
                   ),
 
-
-
                 ],
               )
             ),
@@ -462,30 +463,47 @@ class _UploadState extends State<Upload> {
   }
 }
 
-class Store1 extends ChangeNotifier { // state 보관함임 일면 store
-  var name = 'john kim'; // 커스텀 위젯 별로 없으면 그냥 3-step 전송해서 쓰는게 간단
-  var follow = 0;
-  bool save = false;
+class Store2 extends ChangeNotifier{ // 이렇게 store 여러개 만들어도 됨
+  var name = 'john kim';
+}
 
-  followMe(){
-    if(save != true){
-      follow +=1;
-      save = true;
-      notifyListeners();
-    }
-    else{
-      follow -=1;
-      save = false;
-      notifyListeners();
-    }
+
+class Store1 extends ChangeNotifier { // state 보관함임 일면 store
+  var follower = 0;
+  bool friend = false; // 일종의 스위치 역할 state
+  // 현재 서버와 get 요청중인지 아닌지 그런거 알려주고 싶을때도 이런 스위치 많이 씀
+
+  /*
+  profile 페이지 방문시 get 요청해서 데이터 가져오고 그걸 state 안에 넣으려면
+  아래와 같이 해주면 됨
+   */
+  var profileImage = [];
+  getData() async {
+    var result = await http.get(Uri.parse('https://codingapple1.github.io/app/profile.json'));
+    var result2 = jsonDecode(result.body); // json 형태 다시 map 자료로 Decode
+    profileImage = result2;
+    notifyListeners(); // 재랜더링
   }
 
 
+  addFollower(){
+    if(friend == false){
+      follower++;
+      friend = true;
+    }
+    else{
+      follower--;
+      friend = false;
+    }
+    notifyListeners();
+  }
+
+/*
   changeName(){  // 애도 자식전송 했을때 처럼 변경 함수를 만들어서 사용 해야함
     name ='john park';
     notifyListeners();  // 재랜더링 해주려면 이게 꼭 필요함 그냥은 재 랜더링 안되서 변경 사항이 화면에 안보임
   }
-
+*/
   /*
   1.이러는 이유는 class 안의 변수는 바깥에서 직접 조작시 나중에 버그같은게 날수 있기 때문에 위험 하기때문문
   2. state 이상해지면 버그찾기 쉬움
@@ -499,17 +517,27 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(context.watch<Store1>().name),), // 이렇게 불러주면 됨 모든 위젯에서 이거 직접 사용 가능함
+      appBar: AppBar(title: Text(context.watch<Store2>().name),), // 이렇게 불러주면 됨 모든 위젯에서 이거 직접 사용 가능함
       body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Image.asset('assets/koko1.png',width: 70),
-          Text('팔로워 ${context.watch<Store1>().follow}명'),
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.grey,
+            backgroundImage: AssetImage('assets/koko1.png'), // 동그란 이미지 만들때 이런거 사용 하면 유용함
+          ),
+          Text('팔로워 ${context.watch<Store1>().follower}명'),
           ElevatedButton(onPressed: (){
-            context.read<Store1>().followMe();
-          }, child: Text('팔로우'))
+            context.read<Store1>().addFollower();
+          }, child: Text('팔로우')),
+          ElevatedButton(onPressed: (){
+            context.read<Store1>().getData();
+            print(context.read<Store1>().profileImage);
+          }, child: Text('사진가져오기')),
         ],
       ),
+
+
     );
   }
 }
