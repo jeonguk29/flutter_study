@@ -464,6 +464,22 @@ class _UploadState extends State<Upload> {
 
 class Store1 extends ChangeNotifier { // state 보관함임 일면 store
   var name = 'john kim'; // 커스텀 위젯 별로 없으면 그냥 3-step 전송해서 쓰는게 간단
+  var follow = 0;
+  bool save = false;
+
+  followMe(){
+    if(save != true){
+      follow +=1;
+      save = true;
+      notifyListeners();
+    }
+    else{
+      follow -=1;
+      save = false;
+      notifyListeners();
+    }
+  }
+
 
   changeName(){  // 애도 자식전송 했을때 처럼 변경 함수를 만들어서 사용 해야함
     name ='john park';
@@ -484,11 +500,14 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(context.watch<Store1>().name),), // 이렇게 불러주면 됨 모든 위젯에서 이거 직접 사용 가능함
-      body: Column(
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          Image.asset('assets/koko1.png',width: 70),
+          Text('팔로워 ${context.watch<Store1>().follow}명'),
           ElevatedButton(onPressed: (){
-            context.read<Store1>().changeName();
-          }, child: Text('버튼'))
+            context.read<Store1>().followMe();
+          }, child: Text('팔로우'))
         ],
       ),
     );
