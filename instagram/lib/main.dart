@@ -10,6 +10,8 @@ import 'dart:io'; // 파일 다루는 유용한 함수가 들어있는 기본 �
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+
 
 
 /*
@@ -22,12 +24,19 @@ shared preferences 라는 로컬 공간에 저장하면 됩니다.
  */
 
 void main() {
+
+  //store를 사용할 위젯들을 전부 ChangeNotifierProvider() 로 감싸면 됩니다.
+  // 모든 위젯들이 사용할거면 MaterialApp() 을 감싸면 되겠군요.
   runApp(
-      MaterialApp(
+    ChangeNotifierProvider(
+      create: (c) => Store1(),
+      child: MaterialApp(
           theme: style.theme,
           home: MyApp()
-      )
+      ),
+    )
   );
+
 }
 
 
@@ -453,14 +462,35 @@ class _UploadState extends State<Upload> {
   }
 }
 
+class Store1 extends ChangeNotifier { // state 보관함임 일면 store
+  var name = 'john kim'; // 커스텀 위젯 별로 없으면 그냥 3-step 전송해서 쓰는게 간단
+
+  changeName(){  // 애도 자식전송 했을때 처럼 변경 함수를 만들어서 사용 해야함
+    name ='john park';
+    notifyListeners();  // 재랜더링 해주려면 이게 꼭 필요함 그냥은 재 랜더링 안되서 변경 사항이 화면에 안보임
+  }
+
+  /*
+  1.이러는 이유는 class 안의 변수는 바깥에서 직접 조작시 나중에 버그같은게 날수 있기 때문에 위험 하기때문문
+  2. state 이상해지면 버그찾기 쉬움
+  */
+
+}
+
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Text('프로필레이지'),
+      appBar: AppBar(title: Text(context.watch<Store1>().name),), // 이렇게 불러주면 됨 모든 위젯에서 이거 직접 사용 가능함
+      body: Column(
+        children: [
+          ElevatedButton(onPressed: (){
+            context.read<Store1>().changeName();
+          }, child: Text('버튼'))
+        ],
+      ),
     );
   }
 }
