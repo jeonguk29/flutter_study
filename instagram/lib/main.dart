@@ -51,14 +51,17 @@ class _MyAppState extends State<MyApp> {
   // shared preferences 에 데이터 저장하는 법
   saveData() async {
     var storage = await SharedPreferences.getInstance(); // 저장공간 오픈하는법  기초 셋팅
+
     storage.setString('name',
         'john'); // storage.setString('작명','저장할데이터')   key : value 형태로 저장 하는 거임
+
     storage.setStringList('name', ['john', 'park']);
     storage.remove('name'); // 데이터 삭제 저장한 데이터 삭제 하는 방법임
     var result = storage.get('name'); // 데이터 출력 하는 방법
+    print(result);
 
     // map 자료 저장하려면 JSON으로 바꿔서 저장해야함
-    var map = {'age', 20};
+    var map = {'age': 20};
     storage.setString('map', jsonEncode(map)); // map 자료 넘겨주면 "" 다 붙여서 문자열로 만들어줌
     var result2 = storage.getString('map') ?? "없는데요";
     print(jsonDecode(
