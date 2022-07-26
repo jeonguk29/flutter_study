@@ -436,12 +436,15 @@ class Store1 extends ChangeNotifier { // state 보관함임 일면 store
   var follower = 0;
   bool friend = false;
   var profileImage = [];
+  int i = 0;
   getData() async {
     var result = await http.get(Uri.parse('https://codingapple1.github.io/app/profile.json'));
     var result2 = jsonDecode(result.body); // json 형태 다시 map 자료로 Decode
     profileImage = result2;
     notifyListeners(); // 재랜더링
   }
+
+
 
 
   addFollower(){
@@ -474,10 +477,10 @@ class Profile extends StatelessWidget {
           ),
           //GridView(gridDelegate: gridDelegate),//  GridView ListView는 좀 이기적임 자기들 안에만 스크롤바 생김 그렇기에 CustomScrollView 사용
           SliverGrid(delegate: SliverChildBuilderDelegate( // SliverGrid를 이용해 격자 만들기
-              (c,i) => Container(color: Colors.grey,), // 여기 지정한 위젯을 격자로 만들어줌
-              childCount: 30, // 격자 몇개 만들건지 생성
+              (c,i) =>  Image.network(context.watch<Store1>().profileImage[i]),// 여기 지정한 위젯을 격자로 만들어줌
+              childCount: context.watch<Store1>().profileImage.length, // 격자 몇개 만들건지 생성
           ),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), // 기로로 몇개 배치할지 지정
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3), // 기로로 몇개 배치할지 지정
           ) // 하지만 CustomScrollView  안에서 GridView ListView 이런 기본적인 위젯 못함같은 기능이라도 이름이 좀 다름
         ],
 
