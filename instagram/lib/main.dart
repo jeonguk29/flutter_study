@@ -14,14 +14,6 @@ import 'package:provider/provider.dart';
 
 
 
-/*
-앱을 껐다가 켜면 state는 초기화됩니다.
-그래서 state 안에 있던걸 어디 저장해두고 싶으면
-서버로 보내서 Database에 저장을 하든가 아니면
-shared preferences 라는 로컬 공간에 저장하면 됩니다.
-
-중요한건 서버로 덜중요한건 로컬에 저장하는게 좋은 관습임
- */
 
 void main() {
 
@@ -83,24 +75,6 @@ class _MyAppState extends State<MyApp> {
         result2)); // jsonDecode 안에는 Stirng? 은 뷸가 확실해야함 그래서 위에 처럼 널체크 필요
     print(jsonDecode(result2)['age']); // 이렇게 하면 map에서 원하는 데이터 꺼내 쓸수 있음
   }
-
-    /*
-    storage.setString('name', 'john');
-    storage.setBool('name', true);
-    storage.setInt('name', 20);
-    storage.setDouble('name', 20.5);
-    storage.setStringList('name', ['john', 'park']);
-    실은 숫자, 문자, Bool, List<String> 자료형도 저장가능합니다.
-    참고로 List<int> 이런거 저장 못해서 List<String>으로 바꿔서 저장하든 해야합니다.
-    저것들 출력하려면 set어쩌구를 get어쩌구로만 바꿔주면 출력가능합니다.
-
-    꺼낼때도
-    storage.getString();
-    storage.getBool();
-    storage.getInt();
-    storage.getDouble();
-    storage.getStringList();
-     */
 
 
 
@@ -296,11 +270,6 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     scroll.addListener((){
-      // addListener 왼쪽에 있는 변수가 변할때마다  이아래 코드 실행해 달라는 유용한 함수임
-      //print(scroll.position.pixels); // 스크롤바 내린 높이 출력함 (위에서 부터 얼마나 스크롤이 됬는지)
-      // maxScrollExtent 스크롤바 최대 내릴수 있는 높이
-      //userScrollDirection : user가 어느 방향으로 스크롤하는지
-
       if(scroll.position.pixels == scroll.position.maxScrollExtent){ // 맨 밑까지 스크롤 했는지 체크 가능
               getMore();
         //print('같음');
@@ -348,17 +317,12 @@ class _HomeState extends State<Home> {
                               ).animate(a1),
                               child: child,
                             )
-                          /*
-                            FadeTransition(opacity: a1,child: child),
-                          transitionDuration: Duration(milliseconds: 1500)// 밀리 세컨드 단위로 페이지 전환 애니메이션 속도조절 가능
-                         */
+
                         )
-                        //CupertinoPageRoute(builder: (C) => Profile() 아이폰 스타일 화면 전환
+
                     );
                   },
-                  //onDoubleTap: , 이건 두번 딱딱 하면 뜨는 기능 이거 말고도 다양한 기능 제공
-                 // onHorizontalDragStart: , 왼쪽 스와이프 할때 기능 나오게
-                 // onScaleStart: , 확대 모션 취하면 기능 실행
+
                 ),
               ],
             );
@@ -470,13 +434,7 @@ class Store2 extends ChangeNotifier{ // 이렇게 store 여러개 만들어도 �
 
 class Store1 extends ChangeNotifier { // state 보관함임 일면 store
   var follower = 0;
-  bool friend = false; // 일종의 스위치 역할 state
-  // 현재 서버와 get 요청중인지 아닌지 그런거 알려주고 싶을때도 이런 스위치 많이 씀
-
-  /*
-  profile 페이지 방문시 get 요청해서 데이터 가져오고 그걸 state 안에 넣으려면
-  아래와 같이 해주면 됨
-   */
+  bool friend = false;
   var profileImage = [];
   getData() async {
     var result = await http.get(Uri.parse('https://codingapple1.github.io/app/profile.json'));
@@ -498,16 +456,6 @@ class Store1 extends ChangeNotifier { // state 보관함임 일면 store
     notifyListeners();
   }
 
-/*
-  changeName(){  // 애도 자식전송 했을때 처럼 변경 함수를 만들어서 사용 해야함
-    name ='john park';
-    notifyListeners();  // 재랜더링 해주려면 이게 꼭 필요함 그냥은 재 랜더링 안되서 변경 사항이 화면에 안보임
-  }
-*/
-  /*
-  1.이러는 이유는 class 안의 변수는 바깥에서 직접 조작시 나중에 버그같은게 날수 있기 때문에 위험 하기때문문
-  2. state 이상해지면 버그찾기 쉬움
-  */
 
 }
 
@@ -518,26 +466,56 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(context.watch<Store2>().name),), // 이렇게 불러주면 됨 모든 위젯에서 이거 직접 사용 가능함
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: Colors.grey,
-            backgroundImage: AssetImage('assets/koko1.png'), // 동그란 이미지 만들때 이런거 사용 하면 유용함
+      body:CustomScrollView(// 안에 위젯을 모두 묶어 큰 스크롤바 생성 그래서 스크롤바 필요한 페이지들 기본으로 이렇게 하고 아래 만들어 나가는게 편함
+        slivers: [
+          SliverToBoxAdapter(// 일반 박스 만들기
+            child: ProfileHeader(),
+
           ),
-          Text('팔로워 ${context.watch<Store1>().follower}명'),
-          ElevatedButton(onPressed: (){
-            context.read<Store1>().addFollower();
-          }, child: Text('팔로우')),
-          ElevatedButton(onPressed: (){
-            context.read<Store1>().getData();
-            print(context.read<Store1>().profileImage);
-          }, child: Text('사진가져오기')),
+          //GridView(gridDelegate: gridDelegate),//  GridView ListView는 좀 이기적임 자기들 안에만 스크롤바 생김 그렇기에 CustomScrollView 사용
+          SliverGrid(delegate: SliverChildBuilderDelegate( // SliverGrid를 이용해 격자 만들기
+              (c,i) => Container(color: Colors.grey,), // 여기 지정한 위젯을 격자로 만들어줌
+              childCount: 30, // 격자 몇개 만들건지 생성
+          ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), // 기로로 몇개 배치할지 지정
+          ) // 하지만 CustomScrollView  안에서 GridView ListView 이런 기본적인 위젯 못함같은 기능이라도 이름이 좀 다름
         ],
+
+      /*
+      GridView.builder( // 리스트 뷰랑 사용법 똑같다 보면 됨
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), //몇개를 가로로 보여줄지
+          itemBuilder: (c,i){return Container(color: Colors.grey);},
+        itemCount: 3, // 몇개 들어올지 몰라서 일단 3번 반복하게 만듬
+    */
       ),
 
 
+    );
+  }
+}
+
+class ProfileHeader extends StatelessWidget {
+  const ProfileHeader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        CircleAvatar(
+          radius: 30,
+          backgroundColor: Colors.grey,
+          backgroundImage: AssetImage('assets/koko1.png'), // 동그란 이미지 만들때 이런거 사용 하면 유용함
+        ),
+        Text('팔로워 ${context.watch<Store1>().follower}명'),
+        ElevatedButton(onPressed: (){
+          context.read<Store1>().addFollower();
+        }, child: Text('팔로우')),
+        ElevatedButton(onPressed: (){
+          context.read<Store1>().getData();
+          print(context.read<Store1>().profileImage);
+        }, child: Text('사진가져오기')),
+      ],
     );
   }
 }
