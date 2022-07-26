@@ -1,0 +1,654 @@
+{
+    // IntelliSense를 사용하여 가능한 특성에 대해 알아보세요.
+    // 기존 특성에 대한 설명을 보려면 가리킵니다.
+    // 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "coding_apple_Flutter",
+            "cwd": "coding_apple_Flutter",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "coding_apple_Flutter (profile mode)",
+            "cwd": "coding_apple_Flutter",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "coding_apple_Flutter (release mode)",
+            "cwd": "coding_apple_Flutter",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "instagram",
+            "cwd": "instagram",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "instagram (profile mode)",
+            "cwd": "instagram",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "instagram (release mode)",
+            "cwd": "instagram",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "appbar",
+            "cwd": "Coding_Chef_Basic\\appbar",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "appbar (profile mode)",
+            "cwd": "Coding_Chef_Basic\\appbar",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "appbar (release mode)",
+            "cwd": "Coding_Chef_Basic\\appbar",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "drawar",
+            "cwd": "Coding_Chef_Basic\\drawar",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "drawar (profile mode)",
+            "cwd": "Coding_Chef_Basic\\drawar",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "drawar (release mode)",
+            "cwd": "Coding_Chef_Basic\\drawar",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "drawar2",
+            "cwd": "Coding_Chef_Basic\\drawar2",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "drawar2 (profile mode)",
+            "cwd": "Coding_Chef_Basic\\drawar2",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "drawar2 (release mode)",
+            "cwd": "Coding_Chef_Basic\\drawar2",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "flutter_application_1",
+            "cwd": "Coding_Chef_Basic\\flutter_application_1",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_application_1 (profile mode)",
+            "cwd": "Coding_Chef_Basic\\flutter_application_1",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_application_1 (release mode)",
+            "cwd": "Coding_Chef_Basic\\flutter_application_1",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "flutter_application_2",
+            "cwd": "Coding_Chef_Basic\\Character_design_2\\flutter_application_2",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_application_2 (profile mode)",
+            "cwd": "Coding_Chef_Basic\\Character_design_2\\flutter_application_2",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_application_2 (release mode)",
+            "cwd": "Coding_Chef_Basic\\Character_design_2\\flutter_application_2",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "flutter_application_1",
+            "cwd": "Coding_Chef_Basic\\snack_bar\\flutter_application_1",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_application_1 (profile mode)",
+            "cwd": "Coding_Chef_Basic\\snack_bar\\flutter_application_1",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_application_1 (release mode)",
+            "cwd": "Coding_Chef_Basic\\snack_bar\\flutter_application_1",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "variable",
+            "cwd": "dart_study\\Code_Factory\\variable",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_app",
+            "cwd": "Do_It_flutter\\Chapter1\\flutter_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_app (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter1\\flutter_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_app (release mode)",
+            "cwd": "Do_It_flutter\\Chapter1\\flutter_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "sql_example",
+            "cwd": "Do_It_flutter\\Chapter10\\sql_example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "sql_example (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter10\\sql_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "sql_example (release mode)",
+            "cwd": "Do_It_flutter\\Chapter10\\sql_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "animation_example",
+            "cwd": "Do_It_flutter\\Chapter11\\animation_example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "animation_example (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter11\\animation_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "animation_example (release mode)",
+            "cwd": "Do_It_flutter\\Chapter11\\animation_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "ios_native_example",
+            "cwd": "Do_It_flutter\\Chapter12\\ios_native_example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "ios_native_example (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter12\\ios_native_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "ios_native_example (release mode)",
+            "cwd": "Do_It_flutter\\Chapter12\\ios_native_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "native_example1",
+            "cwd": "Do_It_flutter\\Chapter12\\native_example1",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "native_example1 (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter12\\native_example1",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "native_example1 (release mode)",
+            "cwd": "Do_It_flutter\\Chapter12\\native_example1",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "native_example2",
+            "cwd": "Do_It_flutter\\Chapter12\\native_example2",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "native_example2 (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter12\\native_example2",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "native_example2 (release mode)",
+            "cwd": "Do_It_flutter\\Chapter12\\native_example2",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "native_example3",
+            "cwd": "Do_It_flutter\\Chapter12\\native_example3",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "native_example3 (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter12\\native_example3",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "native_example3 (release mode)",
+            "cwd": "Do_It_flutter\\Chapter12\\native_example3",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "firebase_example1",
+            "cwd": "Do_It_flutter\\Chapter13\\firebase_example1",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "firebase_example1 (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter13\\firebase_example1",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "firebase_example1 (release mode)",
+            "cwd": "Do_It_flutter\\Chapter13\\firebase_example1",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "firebase_example2",
+            "cwd": "Do_It_flutter\\Chapter13\\firebase_example2",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "firebase_example2 (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter13\\firebase_example2",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "firebase_example2 (release mode)",
+            "cwd": "Do_It_flutter\\Chapter13\\firebase_example2",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "modu_tour",
+            "cwd": "Do_It_flutter\\Chapter14\\modu_tour",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "modu_tour (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter14\\modu_tour",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "modu_tour (release mode)",
+            "cwd": "Do_It_flutter\\Chapter14\\modu_tour",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "flutter_app",
+            "cwd": "Do_It_flutter\\Chapter3\\flutter_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_app (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter3\\flutter_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_app (release mode)",
+            "cwd": "Do_It_flutter\\Chapter3\\flutter_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "image_font_add_app",
+            "cwd": "Do_It_flutter\\Chapter4\\image_font_add_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "image_font_add_app (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter4\\image_font_add_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "image_font_add_app (release mode)",
+            "cwd": "Do_It_flutter\\Chapter4\\image_font_add_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "widget_example",
+            "cwd": "Do_It_flutter\\Chapter4\\widget_example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "widget_example (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter4\\widget_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "widget_example (release mode)",
+            "cwd": "Do_It_flutter\\Chapter4\\widget_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "listview_example",
+            "cwd": "Do_It_flutter\\Chapter5\\listview_example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "listview_example (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter5\\listview_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "listview_example (release mode)",
+            "cwd": "Do_It_flutter\\Chapter5\\listview_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "tabbar_example",
+            "cwd": "Do_It_flutter\\Chapter5\\tabbar_example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "tabbar_example (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter5\\tabbar_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "tabbar_example (release mode)",
+            "cwd": "Do_It_flutter\\Chapter5\\tabbar_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "listview_example",
+            "cwd": "Do_It_flutter\\Chapter6\\listview_example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "listview_example (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter6\\listview_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "listview_example (release mode)",
+            "cwd": "Do_It_flutter\\Chapter6\\listview_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "http_example",
+            "cwd": "Do_It_flutter\\Chapter7\\http_example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "http_example (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter7\\http_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "http_example (release mode)",
+            "cwd": "Do_It_flutter\\Chapter7\\http_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "largefile_download",
+            "cwd": "Do_It_flutter\\Chapter7\\largefile_download",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "largefile_download (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter7\\largefile_download",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "largefile_download (release mode)",
+            "cwd": "Do_It_flutter\\Chapter7\\largefile_download",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "subpage_example",
+            "cwd": "Do_It_flutter\\Chapter8\\subpage_example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "subpage_example (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter8\\subpage_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "subpage_example (release mode)",
+            "cwd": "Do_It_flutter\\Chapter8\\subpage_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "todo_list",
+            "cwd": "Do_It_flutter\\Chapter8\\todo_list",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "todo_list (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter8\\todo_list",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "todo_list (release mode)",
+            "cwd": "Do_It_flutter\\Chapter8\\todo_list",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "fileio_example",
+            "cwd": "Do_It_flutter\\Chapter9\\fileio_example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "fileio_example (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter9\\fileio_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "fileio_example (release mode)",
+            "cwd": "Do_It_flutter\\Chapter9\\fileio_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "internal_example",
+            "cwd": "Do_It_flutter\\Chapter9\\internal_example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "internal_example (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter9\\internal_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "internal_example (release mode)",
+            "cwd": "Do_It_flutter\\Chapter9\\internal_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "intro_example",
+            "cwd": "Do_It_flutter\\Chapter9\\intro_example",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "intro_example (profile mode)",
+            "cwd": "Do_It_flutter\\Chapter9\\intro_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "intro_example (release mode)",
+            "cwd": "Do_It_flutter\\Chapter9\\intro_example",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "modu_tour",
+            "cwd": "Do_It_flutter\\FinalProject\\modu_tour",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "modu_tour (profile mode)",
+            "cwd": "Do_It_flutter\\FinalProject\\modu_tour",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "modu_tour (release mode)",
+            "cwd": "Do_It_flutter\\FinalProject\\modu_tour",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

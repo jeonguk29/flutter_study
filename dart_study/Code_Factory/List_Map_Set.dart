@@ -40,11 +40,11 @@ void main()
   
   print(dictionary);
 
- 
-   Map<String, bool> isHarryPotter = {
-   'Harry potter' : true,
-   'Ron Weasley' : true,
-   'Ironman' : false,
+
+  Map<String, bool> isHarryPotter = {
+  'Harry potter' : true,
+  'Ron Weasley' : true,
+  'Ironman' : false,
 };
   
   print(isHarryPotter);
@@ -95,7 +95,7 @@ void main()
   print(names);
   print(names.contains('Flutter'));  // 값이 이 set에 존재 하는지 아닌지 확인 bool형 반환 
   
-   
+  
   // set 과 list 가장 큰 차이는 중복된 값에 유무임 set은 절대 중복 값 허용 안하는걸 알고 가자 
   
   
