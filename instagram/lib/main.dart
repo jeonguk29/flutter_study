@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram/notification.dart';
 //import './style.dart';  // main.dart랑 같은 경로에 있어서 그냥 이렇게 해주면됨
 import './style.dart' as style; // import 할때 변수 중복문제 해결 maindart에도 theme 변수 있을수 있으니
 import 'package:http/http.dart' as http; // 웹 서버로 데이터 요청, 보낼때 필요한 패키지
@@ -11,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-
+import 'notification.dart'; // 외부 파일 가져옴 => initNotification() 사용 하기 위함
 
 
 
@@ -81,6 +82,7 @@ class _MyAppState extends State<MyApp> {
   void initState(){  // 앱 로드 될때 바로 GET 하고 싶음 그럼 이렇게
     saveData();
     super.initState();
+    initNotification(context); // 마테리얼앱을 부모로 가지는 context 필요해서 매개변수로 전송함
     // 여기다 코드 짜면 MyApp 이라는 커스텀 위젯이 로드될때 실행됨
     getData();  //initState() 에는 await 사용 못해서 밖으로 따로 함수를 빼줌
   }
@@ -150,6 +152,9 @@ class _MyAppState extends State<MyApp> {
 
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(child: Text('+'), onPressed: (){
+        showNotification();
+      },),
       appBar: AppBar(
         title: Text("Instagram"),
         actions: [
