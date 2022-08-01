@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram/notification.dart';
+import 'package:instagram/shop.dart';
 //import './style.dart';  // main.dart랑 같은 경로에 있어서 그냥 이렇게 해주면됨
 import './style.dart' as style; // import 할때 변수 중복문제 해결 maindart에도 theme 변수 있을수 있으니
 import 'package:http/http.dart' as http; // 웹 서버로 데이터 요청, 보낼때 필요한 패키지
@@ -13,9 +14,15 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'notification.dart'; // 외부 파일 가져옴 => initNotification() 사용 하기 위함
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-void main() {
 
   //store를 사용할 위젯들을 전부 ChangeNotifierProvider() 로 감싸면 됩니다.
   // 모든 위젯들이 사용할거면 MaterialApp() 을 감싸면 되겠군요.
@@ -196,7 +203,7 @@ class _MyAppState extends State<MyApp> {
         ],
 
       ),
-      body: [Home(mamber:data,addData:addData), Text('샵페이지')][tab],  // 0과 1에 따라 보이는게 다름
+      body: [Home(mamber:data,addData:addData), Shop()][tab],  // 0과 1에 따라 보이는게 다름
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
