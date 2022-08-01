@@ -217,7 +217,7 @@ await notifications.cancelAll();
 
 그래서 원래는 Firebase Cloud Messaging 서비스 도움을 받아서 푸시알림을 보냅니다.
 
-      알림                             알림 
+      알림                             알림
 서버  =>    Firebase Cloud Message  => 폰 (Google Play)
 
 
