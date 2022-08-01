@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;      // 시간 다루는 패키지
+
+
 final notifications = FlutterLocalNotificationsPlugin();
 
 //아래 코드 앱로드시 1회 실행 필요
@@ -68,3 +72,168 @@ showNotification() async {
 
   );
 }
+
+
+showNotification2() async {
+
+  tz.initializeTimeZones(); // 시간 관련 기능 사용하기 위해 꼭 한줄 필요
+
+  var androidDetails = const AndroidNotificationDetails(
+    '유니크한 알림 ID',
+    '알림종류 설명',
+    priority: Priority.high,
+    importance: Importance.max,
+    color: Color.fromARGB(255, 255, 0, 0),
+  );
+  var iosDetails = const IOSNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+  );
+
+  notifications.zonedSchedule( // 저번에는 notifications.show( 하면 바로 알림 뜬다고 함 이렇게 하면 파라미터에 시간 입력 가능
+      2,
+      '제목2',
+      '내용2',
+      tz.TZDateTime.now(tz.local).add(Duration(seconds: 5)), // 이 시간에 알람을 띄어줌
+      // tz.TZDateTime.now(tz.local) 현재 폰의 시간 나옴 add(Duration(seconds: 5))  5초를 더해서 5초후에 알람 띄움
+      //seconds: 아니라 minutes: 30 하면 30분 뒤에  hours: 1 시간후에 days: 10일 뒤에
+      NotificationDetails(android: androidDetails, iOS: iosDetails),
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+      UILocalNotificationDateInterpretation.absoluteTime
+  );
+
+
+}
+
+showNotification3() async {
+
+  tz.initializeTimeZones(); // 시간 관련 기능 사용하기 위해 꼭 한줄 필요
+
+  var androidDetails = const AndroidNotificationDetails(
+    '유니크한 알림 ID',
+    '알림종류 설명',
+    priority: Priority.high,
+    importance: Importance.max,
+    color: Color.fromARGB(255, 255, 0, 0),
+  );
+  var iosDetails = const IOSNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+  );
+
+  notifications.periodicallyShow( // 주기적으로 알람 띄우기 ex 매일
+      2,
+      '제목2',
+      '내용2',
+      RepeatInterval.daily,  // 이렇게 데일리로 해주면 이게 시작 되는 시점으로 부터 매일 알람 띄우게 함
+      NotificationDetails(android: androidDetails, iOS: iosDetails),
+      androidAllowWhileIdle: true,
+
+  );
+
+
+}
+
+
+showNotification4() async {
+
+  tz.initializeTimeZones(); // 시간 관련 기능 사용하기 위해 꼭 한줄 필요
+
+  var androidDetails = const AndroidNotificationDetails(
+    '유니크한 알림 ID',
+    '알림종류 설명',
+    priority: Priority.high,
+    importance: Importance.max,
+    color: Color.fromARGB(255, 255, 0, 0),
+  );
+  var iosDetails = const IOSNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+  );
+
+  notifications.zonedSchedule( 
+      2,
+      '제목2',
+      '내용2',
+      //tz.TZDateTime.now(tz.local), // 현재 7시면
+      makeDate(8, 30, 0), // 아래 만든 함수를 쓰면 시작한 시간이 아니라 지정한 시간 매일 8시30분 0초에 알람 띄워주는 거임
+      NotificationDetails(android: androidDetails, iOS: iosDetails),
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+      UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time  // 이렇게 하면 매일 같은 시간에 알림 띄워줌  매일 7시에 알림 띄어줌
+      // .time 말고 dayOfweekAndTime 하면 매주 같은 시간에 알림 띄워줌
+    // .dayOfMonthAndTime 매달 같은 날짜 시간에 알림 띄워줌
+    // .dateAndTime  매년 같은날짜, 시간에 알림 띄워줌
+  );
+
+
+
+}
+
+
+
+makeDate(hour, min, sec){
+  var now = tz.TZDateTime.now(tz.local);
+  var when = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, min, sec);
+  if (when.isBefore(now)) {
+    return when.add(Duration(days: 1));
+  } else {
+    return when;
+  }
+}
+
+
+/* 메인에서 실행 하면됨
+예정된 알림 취소하는 법
+
+
+
+await notifications.cancel(0);
+0 자리엔 제목이랑 같이 있었던 알림 번호 적으면 됩니다.
+
+이 코드 실행하면 해당 예정된 알림 취소됨
+
+
+
+
+
+await notifications.cancelAll();
+이 코드 실행하면 모든 예정된 알림이 삭제됩니다.
+
+
+
+서버가 보내는 Push 알림은
+
+
+
+서버가 님 앱으로 직접 알림을 보내고 그러지 않습니다.
+
+앱이 꺼져있으면 어떻게 보낼 것임 방법이 없음
+
+그래서 원래는 Firebase Cloud Messaging 서비스 도움을 받아서 푸시알림을 보냅니다.
+
+      알림                             알림 
+서버  =>    Firebase Cloud Message  => 폰 (Google Play)
+
+
+서버가 Firebase Cloud Message으로 메세지를 보냅니다. 알림좀 띄우고 싶다고요
+
+그러면 그 친구가 님들 폰으로 알림메세지를 전송해줍니다.
+
+그럼 백그라운드에서 항상 실행되고 있던 폰의 Google Play라는 앱이 그걸 수신해서
+
+알림을 띄우는 구조로 동작합니다.
+
+
+
+
+
+그래서 서버 -> FCM 통신하는 법을 알아야하고
+
+FCM에서 플러터앱으로 알림수신하는 법도 알면 끝입니다.
+ */

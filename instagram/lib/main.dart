@@ -15,7 +15,6 @@ import 'package:provider/provider.dart';
 import 'notification.dart'; // 외부 파일 가져옴 => initNotification() 사용 하기 위함
 
 
-
 void main() {
 
   //store를 사용할 위젯들을 전부 ChangeNotifierProvider() 로 감싸면 됩니다.
@@ -153,7 +152,7 @@ class _MyAppState extends State<MyApp> {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(child: Text('+'), onPressed: (){
-        showNotification();
+        showNotification2();
       },),
       appBar: AppBar(
         title: Text("Instagram"),
