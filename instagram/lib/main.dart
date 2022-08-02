@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram/notification.dart';
-import 'package:instagram/shop.dart';
+import 'package:instagram/shop2.dart';
 //import './style.dart';  // main.dart랑 같은 경로에 있어서 그냥 이렇게 해주면됨
 import './style.dart' as style; // import 할때 변수 중복문제 해결 maindart에도 theme 변수 있을수 있으니
 import 'package:http/http.dart' as http; // 웹 서버로 데이터 요청, 보낼때 필요한 패키지
@@ -156,6 +156,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
 
+    //print(MediaQuery.of(context).size.width);  // MediaQuery.of(context) 이안에 마테리얼 app 있는 context 잘넣으면 이런거 사용가능함
+    // 현재 폰 화면 가로사이즈(LP 단위) 로  1cm 대충 38LP
+    //print(MediaQuery.of(context).size.height); // 현제 스크린 높이 출력해줌
+    // print(MediaQuery.of(context).padding.top); 기기 여백을 출력해줌
+    print(MediaQuery.of(context).devicePixelRatio); // 1Lp에 몇개의 px이 들어가는지 출력해줌 현재 1.25  고 해상도 기기 사용시 수치가 높아짐
+    print(MediaQuery.of(context).highContrast); // 고대비 옵션 켰는지 (시각 안좋은 사람들) 이런것도 확인가능 : 편의성 옵션 켰는지 안켰는지
+    print(MediaQuery.of(context).textScaleFactor); // 폰트 사이즈 얼마나 키우고 폰 쓰는지  현재 텍스트 몇배 키워서 쓰는지 확인 가능함
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(child: Text('+'), onPressed: (){
@@ -204,6 +211,9 @@ class _MyAppState extends State<MyApp> {
 
       ),
       body: [Home(mamber:data,addData:addData), Shop()][tab],  // 0과 1에 따라 보이는게 다름
+      //body: [MediaQuery.of(context).size.width > 600 ?  HomeLarge() : Home(mamber:data,addData:addData), Shop()][tab],
+      //화면 가로 폭에따라서 HomeLarge() 위젯 하나 따로 빼서 어떻게 보여줄지 만든다음 위처럼 조건문 주면 반응형 레이아웃으로 만들수 있음
+
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -310,7 +320,12 @@ class _HomeState extends State<Home> {
                 Text('id ${widget.mamber[i]['id'].toString()}'),   // 글자 중간에 변수 삽입
                 Text('좋아요 ${widget.mamber[i]['likes'].toString()}'),
                 Text('날짜 ${widget.mamber[i]['date'].toString()}'),
-                Text('내용 ${widget.mamber[i]['content'].toString()}'),
+                Text('내용 ${widget.mamber[i]['content'].toString()}', style: TextStyle(
+                 // 방법 1
+                  // fontSize: MediaQuery.of(context).size.width > 600 ? 30 : 16 // 이렇게 조건부 주면 너비기 600 이하라면 16 이상이라면 30 크기로 보여짐
+                  //방법 2
+                  fontSize: fontsize1(context) // 함수로 만들어 사용이 가능함  단 context 필요하니까 3스탭으로 넘겨주고
+                )),
                 Text(widget.mamber[i]['liked'].toString()),
 
                 // 글쓴이 누르면 글쓴이 프로필 들어가게 만들기  onpessed text에 만들려면 아래 GestureDetector 위젯으로 감싸고 구현 시키는 방법있음
@@ -344,6 +359,15 @@ class _HomeState extends State<Home> {
       //Text('로딩중입니다');
     }
 
+  }
+}
+
+
+fontsize1(context){
+  if (MediaQuery.of(context).size.width >600){
+    return 30;
+  }else {
+    return 16;
   }
 }
 
