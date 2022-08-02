@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // 파이어 스토어 쓰기 위한거
 
+import 'package:firebase_auth/firebase_auth.dart'; // 로그인 기능 사용시 필요
+final auth = FirebaseAuth.instance; // 로그인 기능 짧게 사용하기 위해사
+
 final firestore = FirebaseFirestore.instance;
 // firestore 여기에 유용한 firestore 관련 유용한 함수들이 막 담겨있는거임
 
@@ -14,6 +17,78 @@ class Shop extends StatefulWidget {
 
 class _ShopState extends State<Shop> {
 
+  getData() async {
+    try { // 유저 회원 가입 시키려면 이코드 필요
+      var result = await auth.createUserWithEmailAndPassword( // uth.createUserWithEmailAndPassword 이 함수안에 유저 이메일, 비번 넣으면 가입끝남
+        email: "kim@test.com", // 나중에 유저가 텍스트 필드 넣으면 될거임
+        password: "123456",
+      );
+      result.user?.updateDisplayName('john'); // 유저 회원 가입시 이름도 넣고 싶으면 회원 가입후 추가하는 식으로 짜야함
+    } catch (e) {
+      print(e); // 가입 거절시 실행  (이메일 중복이거나 , 비번 짧거나)
+    }
+  }
+
+  getData2() async{ // 유저 로그인시 이 코드사용 하면 됨
+    try {
+      await auth.signInWithEmailAndPassword( // signInWithEmailAndPassword( 여기에 유저 이메일 비먼 넣으면 로그인 시켜줄거임
+          email: 'kim@test.com',
+          password: '123456'
+      );
+    } catch (e) {
+      print(e);
+    }
+
+    // 로그인 여부 판단 방법 코드
+    if(auth.currentUser?.uid == null){  // auth.currentUser 출력하면 현재 유저 나옴  auth.currentUser?.displayName 같은거도 할수 있음
+      print('로그인 안된 상태군요');
+    } else {
+      print('로그인 하셨네');
+    }
+  }
+
+  getData3() async {
+    await auth.signOut();// 이거 실행하면 로그아웃 됩니다.
+  }
+
+
+  /*
+
+  로그인 기능 왜 추가하는 것임?
+
+
+
+"그냥 다른 앱에 다 있으니까 나도 로그인 기능 만들어야지~" 라는 생각으로 개발하면 망하는 것임
+
+로그인 기능을 어디에 쓰는지 잘 생각해봅시다.
+
+로그인 기능은 지금 유저가 누군지 구분하려고 만드는 것입니다.
+
+
+
+로그인 기능이 있으면
+
+- 인스타그램 글을 발행하면 누가 발행하는 글인지 유저의 uid를 몰래 추가할 수 있음
+
+- 그러면 나중에 내가 발행한 글만 모아볼 수 있고
+
+- 글 수정 삭제할 때도 "현재 유저의 uid가 글에 저장된 uid와 일치하는지" 검사할 수도 있고
+
+- 로그인시 유저가 남자인걸 기록해놓고 나중에 재방문하면 남자용 샵 상품들을 보내줄 수도 있고
+
+- 싫어하는 유저의 uid가 있는 게시물은 안보이게 차단할 수 있고
+
+- 친구가 발행한 게시물만 가져와서 보여줄 수 있고
+
+그래서 사용하는 것입니다.
+
+유저간 구분이 필요없으면 로그인기능 필요없습니다.
+
+
+  */
+
+
+  /*
   getData() async {
     try {
       var result = await firestore.collection('product')
@@ -51,9 +126,11 @@ class _ShopState extends State<Shop> {
     }
   }
 
+
+   */
   void initState(){
     super.initState();  // 여기에는 await 키워드 못써서 함수로 만듬
-    getData();
+    getData2();
   }
   @override
   Widget build(BuildContext context) {
