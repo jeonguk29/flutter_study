@@ -52,7 +52,7 @@ void introduce(){
 
 
 // getter
-String get firstMember{   
+String get firstMember{     // getter 특징은 () 없이 바로 {} 시작 반환값 즉 어떤 걸 리턴 하는지 앞에 자료형 적어주면 됨
   return this.members[0];
 }
 

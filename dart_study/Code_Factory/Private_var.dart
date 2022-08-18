@@ -1,6 +1,6 @@
 void main()
 {
-  _Idol blackPink = _Idol( 
+  _Idol blackPink = _Idol( // 선언할때도 프라이빗으로 선언 
     "블랙핑크",     
     ['지수', '제니', '리사', '로제'],   
 
@@ -22,7 +22,8 @@ void main()
 }
 
 // Private 속성 이 파일 외부에서 사용할수 없는 값들 이 파일을 import 해도 안딸려옴 
-
+// 즉 아래 클레스 이파일을 import 해도 사용 못함 
+// 대부분의 것들 다 Private 으로 만들수 있음 
 class _Idol{  // 이렇게 클래스 이름 앞에 _로해주면  Private 속성이됨
 final String name ;             // final String _name  변수도 되고  함수도 다됨 
 final List<String> members;      
