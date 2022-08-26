@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "664209586835",
+    "project_id": "logintest1-45fb8",
+    "storage_bucket": "logintest1-45fb8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664209586835:android:3fbc8119e8b62039caab66",
+        "android_client_info": {
+          "package_name": "com.example.signlnscreen_widget_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "664209586835-ksllp3rj8neo99q1chvcif0h9s787ke6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQdGgG1yJVMZO0vA9e_qee99412Tm9tV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "664209586835-ksllp3rj8neo99q1chvcif0h9s787ke6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

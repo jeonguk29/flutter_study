@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="db50e299-50b7-4252-886b-55ed72c99176" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Do_It_flutter/.idea/do_it_flutter_2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Do_It_flutter/.idea/do_it_flutter_2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Do_It_flutter/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Do_It_flutter/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Do_It_flutter/Chapter1/flutter_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../Do_It_flutter/Chapter1/flutter_app/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Do_It_flutter/Chapter3/flutter_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../Do_It_flutter/Chapter3/flutter_app/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Do_It_flutter/Chapter4/widget_example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../Do_It_flutter/Chapter4/widget_example/pubspec.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2DtOzvKMA9uNZwTpGVShvSqevj8" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="db50e299-50b7-4252-886b-55ed72c99176" name="Changes" comment="" />
+      <created>1661515182691</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1661515182691</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
