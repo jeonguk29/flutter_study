@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/../Do_It_flutter/Chapter1/flutter_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../Do_It_flutter/Chapter1/flutter_app/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Do_It_flutter/Chapter3/flutter_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../Do_It_flutter/Chapter3/flutter_app/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Do_It_flutter/Chapter4/widget_example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../Do_It_flutter/Chapter4/widget_example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/login.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/login.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +31,7 @@
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/signInscreen_login_firebase" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -54,5 +56,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
