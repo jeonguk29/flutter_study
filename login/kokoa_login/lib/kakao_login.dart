@@ -39,7 +39,6 @@ class KakaoLogin implements SocialLogin {
   }
 
 }
-
 /*
 class KakaoLogin implements SocialLogin{
   @override
