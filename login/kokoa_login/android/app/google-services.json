@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "399180687350",
+    "project_id": "loginkakao-41228",
+    "storage_bucket": "loginkakao-41228.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399180687350:android:cc9b2e3b587f233dfc49d7",
+        "android_client_info": {
+          "package_name": "com.kakaologintest.kokoa_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399180687350-l1e0uclsdkk7cgjhevumgr1sbhqkjbc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJl-yXv4kxe_ewl-4cwn-HQmdZRTzYwNA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399180687350-l1e0uclsdkk7cgjhevumgr1sbhqkjbc4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
