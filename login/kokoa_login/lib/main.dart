@@ -4,6 +4,7 @@ import 'package:kokoa_login/kakao_login.dart';
 import 'package:kokoa_login/main_view_model.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:firebase_core/firebase_core.dart';
+import 'package:kokoa_login/shop.dart';
 import 'firebase_options.dart';
 
 
@@ -68,12 +69,17 @@ class _MyHomePageState extends State<MyHomePage> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.network(
+                Image.network(width: 300,
                     viewModel.user?.kakaoAccount?.profile?.profileImageUrl ?? ''),
                 Text(
                   '${viewModel.isLogined}',
                   style: Theme.of(context).textTheme.headline4,
                 ),
+                Text(
+                  viewModel.user?.kakaoAccount?.profile?.nickname ?? '',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                Shop(),
                 ElevatedButton(
                   onPressed: () async {
                     await viewModel.logout();

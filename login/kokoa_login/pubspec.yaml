@@ -39,6 +39,7 @@ dependencies:
   kakao_flutter_sdk_user: ^1.2.1
   firebase_core: ^1.21.1
   firebase_auth: ^3.7.0
+  cloud_firestore: ^3.4.6
   http: ^0.13.5
 
 dev_dependencies:
