@@ -29,7 +29,7 @@ class _ShopState extends State<Shop> {
   // 데이터 저장
   setData() async {
     try {
-      await fireStore.collection('user').add({'name': '우기', 'uid': "qwer1234"});
+      await fireStore.collection('user').add({'name': '야야', 'uid': "1234"});
     }
     catch(e){
       print(e);

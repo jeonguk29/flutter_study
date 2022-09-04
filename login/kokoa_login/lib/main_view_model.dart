@@ -4,6 +4,9 @@ import 'package:kokoa_login/social_login.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 
 
+
+
+
 class MainViewModel {
   final _firebaseAuthDataSource = FirebaseAuthRemoteDataSource();
   final SocialLogin _socialLogin;
@@ -37,7 +40,11 @@ class MainViewModel {
     isLogined = false;
     user = null;
   }
+
+
 }
+
+
 
 /*
 class MainViewModel{

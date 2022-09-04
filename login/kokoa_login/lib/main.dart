@@ -47,6 +47,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final viewModel = MainViewModel(KakaoLogin());
 
+  final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,11 +81,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   viewModel.user?.kakaoAccount?.profile?.nickname ?? '',
                   style: Theme.of(context).textTheme.headline4,
                 ),
-                Shop(),
+                Text(
+                  auth.currentUser?.uid ?? '',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                //  auth.currentUser?.uid  문서 안에 uid 같은 거 불러오기
+
+                const Shop(),
                 ElevatedButton(
                   onPressed: () async {
                     await viewModel.logout();
-                    setState(() {});
+                    setState(() {
+                      auth.signOut();
+                    });
                   },
                   child: const Text('Logout'),
                 ),
