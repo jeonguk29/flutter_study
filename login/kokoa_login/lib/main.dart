@@ -4,9 +4,10 @@ import 'package:kokoa_login/kakao_login.dart';
 import 'package:kokoa_login/main_view_model.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:firebase_core/firebase_core.dart';
+import 'package:kokoa_login/mbti.dart';
 import 'package:kokoa_login/shop.dart';
 import 'firebase_options.dart';
-
+import "package:flutter/cupertino.dart";
 
 void main() async{
 
@@ -86,7 +87,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: Theme.of(context).textTheme.headline4,
                 ),
                 //  auth.currentUser?.uid  문서 안에 uid 같은 거 불러오기
-
+                IconButton(
+                  icon: Icon(Icons.add_box_outlined),
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Mbtisave()),
+                    );
+                  },
+                ),
                 const Shop(),
                 ElevatedButton(
                   onPressed: () async {
