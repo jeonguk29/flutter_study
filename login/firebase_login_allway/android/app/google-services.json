@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "506189807188",
+    "project_id": "fir-login-allway",
+    "storage_bucket": "fir-login-allway.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506189807188:android:73025f98c0b8287e5a77c1",
+        "android_client_info": {
+          "package_name": "com.woogie.firebaseloginallway"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "506189807188-10kjdhaqn69a7agtrb9pgkmv8oc5b0t7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1dcO62D-MAGj2wTRsUUgJFwnFywHyOfU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "506189807188-10kjdhaqn69a7agtrb9pgkmv8oc5b0t7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
